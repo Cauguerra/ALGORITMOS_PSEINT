@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmos con PSeInt - 5 Conceptos Clave</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c4a6e 0%, #075985 50%, #0c4a6e 100%);
+            color: #e0f2fe;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: radial-gradient(ellipse at center, rgba(14, 165, 233, 0.2) 0%, transparent 70%);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230ea5e9' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: #7dd3fc;
+            font-weight: 600;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #bae6fd;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .algorithms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 500px) {
+            .algorithms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards */
+        .algo-card {
+            background: rgba(8, 47, 73, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .algo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .algo-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56, 189, 248, 0.6);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 80px rgba(14, 165, 233, 0.15);
+        }
+
+        .algo-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .algo-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .algo-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #0ea5e9, #6366f1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+        }
+
+        .algo-title-group h2 {
+            font-size: 1.4rem;
+            color: #f0f9ff;
+            margin-bottom: 5px;
+        }
+
+        .algo-tag {
+            color: #38bdf8;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .algo-desc {
+            color: #bae6fd;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        /* Visualización */
+        .visualization {
+            background: rgba(3, 37, 59, 0.8);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.15);
+        }
+
+        .viz-title {
+            font-size: 0.85rem;
+            color: #7dd3fc;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Sorting Bars */
+        .sort-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 6px;
+            height: 140px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .bar {
+            width: 35px;
+            background: linear-gradient(to top, #0ea5e9, #38bdf8);
+            border-radius: 4px 4px 0 0;
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 8px;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .bar.comparing {
+            background: linear-gradient(to top, #f59e0b, #fbbf24);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .bar.swapping {
+            background: linear-gradient(to top, #ef4444, #f87171);
+            transform: scale(1.1);
+        }
+
+        .bar.sorted {
+            background: linear-gradient(to top, #10b981, #34d399);
+        }
+
+        /* Binary Search Visualization */
+        .search-array {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .array-item {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .array-item.active {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            transform: scale(1.15);
+            border-color: #fbbf24;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+            z-index: 10;
+        }
+
+        .array-item.found {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-color: #34d399;
+            animation: pulse 1s infinite;
+        }
+
+        .array-item.rejected {
+            opacity: 0.4;
+            transform: scale(0.9);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(16, 185, 129, 0.8); }
+        }
+
+        /* Recursion Stack */
+        .stack-container {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            gap: 5px;
+            padding: 15px;
+            min-height: 180px;
+        }
+
+        .stack-item {
+            width: 200px;
+            padding: 12px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            border-radius: 8px;
+            border-left: 4px solid #60a5fa;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            transition: all 0.4s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stack-item.active {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-left-color: #fbbf24;
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .stack-item.resolved {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-left-color: #34d399;
+        }
+
+        /* Loop Visualization */
+        .loop-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .loop-counter {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 4px solid #60a5fa;
+            transition: all 0.3s ease;
+        }
+
+        .loop-counter.active {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-color: #fbbf24;
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+        }
+
+        .loop-counter span {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .loop-counter label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .loop-items {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .loop-item {
+            padding: 10px 20px;
+            background: rgba(30, 64, 175, 0.3);
+            border-radius: 20px;
+            border: 2px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+
+        .loop-item.processed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-color: #34d399;
+            transform: scale(1.05);
+        }
+
+        /* Condition Visualization */
+        .condition-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .flow-node {
+            padding: 15px 30px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .flow-node::after {
+            content: '↓';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: #60a5fa;
+        }
+
+        .flow-node:last-child::after {
+            display: none;
+        }
+
+        .flow-node.active {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.5);
+            transform: scale(1.05);
+        }
+
+        .flow-node.true-path {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .flow-node.false-path {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        /* PSeInt Code Block */
+        .code-section {
+            background: rgba(3, 37, 59, 0.9);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .code-header {
+            background: rgba(14, 165, 233, 0.2);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .code-header span {
+            color: #38bdf8;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .code-content {
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            color: #e0f2fe;
+        }
+
+        .code-keyword {
+            color: #c084fc;
+            font-weight: bold;
+        }
+
+        .code-function {
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        .code-string {
+            color: #4ade80;
+        }
+
+        .code-comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-number {
+            color: #fbbf24;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.secondary {
+            background: rgba(14, 165, 233, 0.15);
+            border: 2px solid rgba(14, 165, 233, 0.5);
+        }
+
+        .btn.secondary:hover {
+            background: rgba(14, 165, 233, 0.25);
+        }
+
+        /* Status */
+        .status {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #38bdf8;
+            min-height: 24px;
+            font-weight: 500;
+            padding: 8px;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(14, 165, 233, 0.1);
+            border-left: 4px solid #0ea5e9;
+            padding: 15px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 20px;
+        }
+
+        .info-box h4 {
+            color: #38bdf8;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p {
+            color: #bae6fd;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Complexity */
+        .complexity {
+            display: flex;
+            gap: 25px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .complexity-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .complexity-label {
+            font-size: 0.75rem;
+            color: #7dd3fc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .complexity-value {
+            font-size: 1.1rem;
+            color: #f0f9ff;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #7dd3fc;
+            border-top: 1px solid rgba(56, 189, 248, 0.1);
+            margin-top: 40px;
+        }
+
+        .pseint-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(14, 165, 233, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .algo-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .algo-card:nth-child(1) { animation-delay: 0.1s; }
+        .algo-card:nth-child(2) { animation-delay: 0.2s; }
+        .algo-card:nth-child(3) { animation-delay: 0.3s; }
+        .algo-card:nth-child(4) { animation-delay: 0.4s; }
+        .algo-card:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Copy button */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #bae6fd;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .code-wrapper {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="subtitle">🎓 Aprende Programación Estructurada</div>
+        <h1>Algoritmos con PSeInt</h1>
+        <p>5 conceptos fundamentales explicados visualmente con ejemplos prácticos en pseudocódigo PSeInt</p>
+    </header>
+
+    <main class="container">
+        <div class="algorithms-grid">
+            
+            <!-- 1. ESTRUCTURAS CONDICIONALES -->
+            <article class="algo-card">
+                <div class="algo-header">
+                    <div class="algo-icon">🔀</div>
+                    <div class="algo-title-group">
+                        <h2>Estructuras Condicionales</h2>
+                        <div class="algo-tag">Si-Entonces / SiNo</div>
+                    </div>
+                </div>
+                
+                <p class="algo-desc">
+                    Las estructuras condicionales permiten que un algoritmo tome decisiones y ejecute diferentes bloques de código según se cumplan o no ciertas condiciones. Son la base de la lógica de programación.
+                </p>
+
+                <div class="visualization">
+                    <div class="viz-title">Flujo de decisión: ¿Es mayor de edad?</div>
+                    <div class="condition-flow" id="conditionFlow">
+                        <div class="flow-node" id="cond1">Inicio</div>
+                        <div class="flow-node" id="cond2">Edad >= 18?</div>
+                        <div class="flow-node" id="cond3" style="display:none">Mayor de edad ✓</div>
+                        <div class="flow-node" id="cond4" style="display:none">Menor de edad ✗</div>
+                        <div class="flow-node" id="cond5">Fin</div>
+                    </div>
+                    <div class="status" id="condStatus">Haz clic en "Simular 25 años" o "Simular 15 años"</div>
+                    <div class="controls">
+                        <button class="btn" onclick="simulateCondition(25)">👤 Simular 25 años</button>
+                        <button class="btn secondary" onclick="simulateCondition(15)">👶 Simular 15 años</button>
+                        <button class="btn secondary" onclick="resetCondition()">↻ Reiniciar</button>
+                    </div>
+                </div>
+
+                <div class="code-section">
+                    <div class="code-header">
+                        <span>📋 Código PSeInt</span>
+                    </div>
+                    <div class="code-wrapper">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <pre class="code-content"><span class="code-keyword">Proceso</span> <span class="code-function">VerificarEdad</span>
+    <span class="code-keyword">Definir</span> edad <span class="code-keyword">Como</span> Entero
+    
+    <span class="code-function">Escribir</span> <span class="code-string">"Ingrese su edad:"</span>
+    <span class="code-function">Leer</span> edad
+    
+    <span class="code-keyword">Si</span> edad >= 18 <span class="code-keyword">Entonces</span>
+        <span class="code-function">Escribir</span> <span class="code-string">"Es mayor de edad"</span>
+    <span class="code-keyword">SiNo</span>
+        <span class="code-function">Escribir</span> <span class="code-string">"Es menor de edad"</span>
+    <span class="code-keyword">FinSi</span>
+<span class="code-keyword">FinProceso</span></pre>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 Aplicación práctica</h4>
+                    <p>Sistemas de validación: verificar si un usuario puede acceder a contenido restringido, determinar si una nota es aprobatoria (>=60), o clasificar el IMC de una persona.</p>
+                </div>
+
+                <div class="complexity">
+                    <div class="complexity-item">
+                        <span class="complexity-label">Tiempo</span>
+                        <span class="complexity-value">O(1)</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">Estructura</span>
+                        <span class="complexity-value">Secuencial</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2. ESTRUCTURAS REPETITIVAS (CICLOS) -->
+            <article class="algo-card">
+                <div class="algo-header">
+                    <div class="algo-icon">🔄</div>
+                    <div class="algo-title-group">
+                        <h2>Estructuras Repetitivas</h2>
+                        <div class="algo-tag">Para / Mientras / Repetir</div>
+                    </div>
+                </div>
+                
+                <p class="algo-desc">
+                    Los ciclos o bucles permiten ejecutar un bloque de código múltiples veces. Son esenciales para procesar colecciones de datos, realizar cálculos iterativos y automatizar tareas repetitivas.
+                </p>
+
+                <div class="visualization">
+                    <div class="viz-title">Ciclo Para: Tabla del 5</div>
+                    <div class="loop-container">
+                        <div class="loop-counter" id="loopCounter">
+                            <label>CONTADOR</label>
+                            <span id="counterValue">1</span>
+                        </div>
+                        <div class="loop-items" id="loopItems">
+                            <div class="loop-item">5 × 1 = ?</div>
+                            <div class="loop-item">5 × 2 = ?</div>
+                            <div class="loop-item">5 × 3 = ?</div>
+                            <div class="loop-item">5 × 4 = ?</div>
+                            <div class="loop-item">5 × 5 = ?</div>
+                        </div>
+                    </div>
+                    <div class="status" id="loopStatus">Haz clic en "Ejecutar Ciclo" para ver la iteración</div>
+                    <div class="controls">
+                        <button class="btn" onclick="startLoop()">▶ Ejecutar Ciclo</button>
+                        <button class="btn secondary" onclick="resetLoop()">↻ Reiniciar</button>
+                    </div>
+                </div>
+
+                <div class="code-section">
+                    <div class="code-header">
+                        <span>📋 Código PSeInt</span>
+                    </div>
+                    <div class="code-wrapper">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <pre class="code-content"><span class="code-keyword">Proceso</span> <span class="code-function">TablaMultiplicar</span>
+    <span class="code-keyword">Definir</span> i, resultado <span class="code-keyword">Como</span> Entero
+    
+    <span class="code-function">Escribir</span> <span class="code-string">"Tabla del 5:"</span>
+    
+    <span class="code-keyword">Para</span> i <- 1 <span class="code-keyword">Hasta</span> 5 <span class="code-keyword">Con Paso</span> 1 <span class="code-keyword">Hacer</span>
+        resultado <- 5 * i
+        <span class="code-function">Escribir</span> <span class="code-string">"5 × "</span>, i, <span class="code-string">" = "</span>, resultado
+    <span class="code-keyword">FinPara</span>
+<span class="code-keyword">FinProceso</span></pre>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 Aplicación práctica</h4>
+                    <p>Generar reportes de nómina procesando empleados uno por uno, validar que todos los campos de un formulario estén completos, o calcular el factorial de un número.</p>
+                </div>
+
+                <div class="complexity">
+                    <div class="complexity-item">
+                        <span class="complexity-label">Tiempo</span>
+                        <span class="complexity-value">O(n)</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">Iteraciones</span>
+                        <span class="complexity-value">Controladas</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3. ARREGLOS (VECTORES) -->
+            <article class="algo-card">
+                <div class="algo-header">
+                    <div class="algo-icon">📊</div>
+                    <div class="algo-title-group">
+                        <h2>Arreglos (Vectores)</h2>
+                        <div class="algo-tag">Estructuras de Datos</div>
+                    </div>
+                </div>
+                
+                <p class="algo-desc">
+                    Los arreglos son estructuras que almacenan múltiples valores del mismo tipo bajo un solo nombre. Permiten organizar datos relacionados y acceder a ellos mediante índices numéricos.
+                </p>
+
+                <div class="visualization">
+                    <div class="viz-title">Ordenamiento Bubble Sort en Vector</div>
+                    <div class="sort-container" id="sortContainer">
+                        <!-- Bars generated by JS -->
+                    </div>
+                    <div class="status" id="sortStatus">Haz clic en "Ordenar Vector" para comenzar</div>
+                    <div class="controls">
+                        <button class="btn" onclick="startSort()">📊 Ordenar Vector</button>
+                        <button class="btn secondary" onclick="resetSort()">↻ Nuevo Vector</button>
+                    </div>
+                </div>
+
+                <div class="code-section">
+                    <div class="code-header">
+                        <span>📋 Código PSeInt</span>
+                    </div>
+                    <div class="code-wrapper">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <pre class="code-content"><span class="code-keyword">Proceso</span> <span class="code-function">OrdenarVector</span>
+    <span class="code-keyword">Definir</span> nums, i, j, temp <span class="code-keyword">Como</span> Entero
+    <span class="code-keyword">Dimension</span> nums[<span class="code-number">5</span>]
+    
+    <span class="code-comment">// Llenar vector</span>
+    nums[<span class="code-number">1</span>] <- <span class="code-number">45</span>; nums[<span class="code-number">2</span>] <- <span class="code-number">12</span>
+    nums[<span class="code-number">3</span>] <- <span class="code-number">78</span>; nums[<span class="code-number">4</span>] <- <span class="code-number">23</span>
+    nums[<span class="code-number">5</span>] <- <span class="code-number">67</span>
+    
+    <span class="code-comment">// Bubble Sort</span>
+    <span class="code-keyword">Para</span> i <- 1 <span class="code-keyword">Hasta</span> 4 <span class="code-keyword">Hacer</span>
+        <span class="code-keyword">Para</span> j <- 1 <span class="code-keyword">Hasta</span> 5-i <span class="code-keyword">Hacer</span>
+            <span class="code-keyword">Si</span> nums[j] > nums[j+1] <span class="code-keyword">Entonces</span>
+                temp <- nums[j]
+                nums[j] <- nums[j+1]
+                nums[j+1] <- temp
+            <span class="code-keyword">FinSi</span>
+        <span class="code-keyword">FinPara</span>
+    <span class="code-keyword">FinPara</span>
+<span class="code-keyword">FinProceso</span></pre>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 Aplicación práctica</h4>
+                    <p>Almacenar las calificaciones de 50 estudiantes, mantener un inventario de productos, o registrar las temperaturas diarias de un mes para análisis climático.</p>
+                </div>
+
+                <div class="complexity">
+                    <div class="complexity-item">
+                        <span class="complexity-label">Acceso</span>
+                        <span class="complexity-value">O(1)</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">Búsqueda</span>
+                        <span class="complexity-value">O(n)</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4. BÚSQUEDA BINARIA -->
+            <article class="algo-card">
+                <div class="algo-header">
+                    <div class="algo-icon">🔍</div>
+                    <div class="algo-title-group">
+                        <h2>Búsqueda Binaria</h2>
+                        <div class="algo-tag">Divide y Vencerás</div>
+                    </div>
+                </div>
+                
+                <p class="algo-desc">
+                    Algoritmo eficiente para encontrar elementos en arreglos ordenados. Divide repetidamente el espacio de búsqueda a la mitad, descartando la mitad donde no puede estar el objetivo.
+                </p>
+
+                <div class="visualization">
+                    <div class="viz-title">Buscando el número 42</div>
+                    <div class="search-array" id="searchArray">
+                        <div class="array-item" data-index="0">10</div>
+                        <div class="array-item" data-index="1">25</div>
+                        <div class="array-item" data-index="2">32</div>
+                        <div class="array-item" data-index="3">42</div>
+                        <div class="array-item" data-index="4">58</div>
+                        <div class="array-item" data-index="5">67</div>
+                        <div class="array-item" data-index="6">89</div>
+                        <div class="array-item" data-index="7">95</div>
+                    </div>
+                    <div class="status" id="searchStatus">Haz clic en "Buscar" para iniciar la búsqueda binaria</div>
+                    <div class="controls">
+                        <button class="btn" onclick="startBinarySearch()">🔍 Buscar 42</button>
+                        <button class="btn secondary" onclick="resetSearch()">↻ Reiniciar</button>
+                    </div>
+                </div>
+
+                <div class="code-section">
+                    <div class="code-header">
+                        <span>📋 Código PSeInt</span>
+                    </div>
+                    <div class="code-wrapper">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <pre class="code-content"><span class="code-keyword">Proceso</span> <span class="code-function">BusquedaBinaria</span>
+    <span class="code-keyword">Definir</span> nums, buscado, izq, der, medio <span class="code-keyword">Como</span> Entero
+    <span class="code-keyword">Dimension</span> nums[<span class="code-number">8</span>]
+    <span class="code-keyword">Definir</span> encontrado <span class="code-keyword">Como</span> Logico
+    
+    <span class="code-comment">// Vector ordenado</span>
+    nums[1]<-10; nums[2]<-25; nums[3]<-32; nums[4]<-42
+    nums[5]<-58; nums[6]<-67; nums[7]<-89; nums[8]<-95
+    
+    buscado <- 42
+    izq <- 1; der <- 8; encontrado <- Falso
+    
+    <span class="code-keyword">Mientras</span> izq <= der <span class="code-keyword">Y</span> encontrado = Falso <span class="code-keyword">Hacer</span>
+        medio <- trunc((izq + der) / 2)
+        <span class="code-keyword">Si</span> nums[medio] = buscado <span class="code-keyword">Entonces</span>
+            encontrado <- Verdadero
+        <span class="code-keyword">SiNo</span>
+            <span class="code-keyword">Si</span> buscado < nums[medio] <span class="code-keyword">Entonces</span>
+                der <- medio - 1
+            <span class="code-keyword">SiNo</span>
+                izq <- medio + 1
+            <span class="code-keyword">FinSi</span>
+        <span class="code-keyword">FinSi</span>
+    <span class="code-keyword">FinMientras</span>
+<span class="code-keyword">FinProceso</span></pre>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 Aplicación práctica</h4>
+                    <p>Buscar números de cuenta en bases de datos bancarias ordenadas, localizar palabras en diccionarios digitales, o verificar existencia de productos en inventarios ordenados.</p>
+                </div>
+
+                <div class="complexity">
+                    <div class="complexity-item">
+                        <span class="complexity-label">Tiempo</span>
+                        <span class="complexity-value">O(log n)</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">Requisito</span>
+                        <span class="complexity-value">Datos Ordenados</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5. FUNCIONES Y RECURSIVIDAD -->
+            <article class="algo-card">
+                <div class="algo-header">
+                    <div class="algo-icon">🌀</div>
+                    <div class="algo-title-group">
+                        <h2>Funciones y Recursividad</h2>
+                        <div class="algo-tag">Modularidad</div>
+                    </div>
+                </div>
+                
+                <p class="algo-desc">
+                    Las funciones permiten dividir un programa en módulos reutilizables. La recursividad ocurre cuando una función se llama a sí misma para resolver subproblemas más pequeños hasta alcanzar un caso base.
+                </p>
+
+                <div class="visualization">
+                    <div class="viz-title">Pila de llamadas: Factorial(5)</div>
+                    <div class="stack-container" id="stackContainer">
+                        <div class="stack-item" id="stack0">factorial(5) = 5 × factorial(4)</div>
+                        <div class="stack-item" id="stack1">factorial(4) = 4 × factorial(3)</div>
+                        <div class="stack-item" id="stack2">factorial(3) = 3 × factorial(2)</div>
+                        <div class="stack-item" id="stack3">factorial(2) = 2 × factorial(1)</div>
+                        <div class="stack-item" id="stack4">factorial(1) = 1 (Caso Base)</div>
+                    </div>
+                    <div class="status" id="recursionStatus">Haz clic en "Ejecutar Recursión" para ver la pila de llamadas</div>
+                    <div class="controls">
+                        <button class="btn" onclick="startRecursion()">🧮 Ejecutar Recursión</button>
+                        <button class="btn secondary" onclick="resetRecursion()">↻ Reiniciar</button>
+                    </div>
+                </div>
+
+                <div class="code-section">
+                    <div class="code-header">
+                        <span>📋 Código PSeInt</span>
+                    </div>
+                    <div class="code-wrapper">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <pre class="code-content"><span class="code-keyword">Proceso</span> <span class="code-function">CalcularFactorial</span>
+    <span class="code-keyword">Definir</span> n, resultado <span class="code-keyword">Como</span> Entero
+    
+    <span class="code-function">Escribir</span> <span class="code-string">"Ingrese un número:"</span>
+    <span class="code-function">Leer</span> n
+    
+    resultado <- <span class="code-function">Factorial</span>(n)
+    <span class="code-function">Escribir</span> <span class="code-string">"El factorial es:"</span>, resultado
+<span class="code-keyword">FinProceso</span>
+
+<span class="code-keyword">Funcion</span> f <- <span class="code-function">Factorial</span>(num)
+    <span class="code-keyword">Definir</span> f <span class="code-keyword">Como</span> Entero
+    <span class="code-keyword">Si</span> num <= 1 <span class="code-keyword">Entonces</span>
+        f <- 1  <span class="code-comment">// Caso base</span>
+    <span class="code-keyword">SiNo</span>
+        f <- num * <span class="code-function">Factorial</span>(num - 1)  <span class="code-comment">// Llamada recursiva</span>
+    <span class="code-keyword">FinSi</span>
+<span class="code-keyword">FinFuncion</span></pre>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 Aplicación práctica</h4>
+                    <p>Calcular combinaciones matemáticas (nCr), recorrer estructuras de carpetas anidadas, resolver torres de Hanoi, o procesar expresiones matemáticas con paréntesis anidados.</p>
+                </div>
+
+                <div class="complexity">
+                    <div class="complexity-item">
+                        <span class="complexity-label">Tiempo</span>
+                        <span class="complexity-value">O(n)</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">Espacio</span>
+                        <span class="complexity-value">O(n)</span>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="pseint-logo">
+            <span>🖥️</span>
+            <span>Compatible con PSeInt 2024</span>
+        </div>
+        <p>PSeInt es una herramienta educativa para aprender programación mediante pseudocódigo</p>
+        <p style="margin-top:10px;font-size:0.9rem">Visualizaciones interactivas para comprender la lógica de algoritmos</p>
+    </footer>
+
+    <script>
+        // ==================== UTILIDADES ====================
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function copyCode(btn) {
+            const code = btn.nextElementSibling.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const original = btn.textContent;
+                btn.textContent = '✓ Copiado';
+                btn.style.background = 'rgba(16, 185, 129, 0.3)';
+                setTimeout(() => {
+                    btn.textContent = original;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // ==================== 1. ESTRUCTURAS CONDICIONALES ====================
+        async function simulateCondition(age) {
+            resetCondition();
+            const nodes = {
+                start: document.getElementById('cond1'),
+                check: document.getElementById('cond2'),
+                truePath: document.getElementById('cond3'),
+                falsePath: document.getElementById('cond4'),
+                end: document.getElementById('cond5')
+            };
+            const status = document.getElementById('condStatus');
+            
+            // Inicio
+            nodes.start.classList.add('active');
+            status.textContent = 'Iniciando algoritmo...';
+            await sleep(800);
+            nodes.start.classList.remove('active');
+            
+            // Condición
+            nodes.check.classList.add('active');
+            status.textContent = `Evaluando: ¿${age} >= 18?`;
+            await sleep(1200);
+            nodes.check.classList.remove('active');
+            
+            // Resultado
+            if (age >= 18) {
+                nodes.truePath.style.display = 'block';
+                nodes.truePath.classList.add('active', 'true-path');
+                status.textContent = `✅ Verdadero: ${age} es mayor o igual a 18`;
+                await sleep(800);
+                nodes.truePath.classList.remove('active');
+            } else {
+                nodes.falsePath.style.display = 'block';
+                nodes.falsePath.classList.add('active', 'false-path');
+                status.textContent = `❌ Falso: ${age} es menor a 18`;
+                await sleep(800);
+                nodes.falsePath.classList.remove('active');
+            }
+            
+            // Fin
+            nodes.end.classList.add('active');
+            status.textContent = 'Proceso completado';
+            await sleep(500);
+            nodes.end.classList.remove('active');
+        }
+
+        function resetCondition() {
+            const nodes = ['cond1', 'cond2', 'cond3', 'cond4', 'cond5'];
+            nodes.forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.remove('active', 'true-path', 'false-path');
+                if (id === 'cond3' || id === 'cond4') {
+                    el.style.display = 'none';
+                }
+            });
+            document.getElementById('condStatus').textContent = 'Haz clic en "Simular 25 años" o "Simular 15 años"';
+        }
+
+        // ==================== 2. ESTRUCTURAS REPETITIVAS ====================
+        let loopRunning = false;
+
+        async function startLoop() {
+            if (loopRunning) return;
+            loopRunning = true;
+            
+            const counter = document.getElementById('loopCounter');
+            const counterValue = document.getElementById('counterValue');
+            const items = document.querySelectorAll('.loop-item');
+            const status = document.getElementById('loopStatus');
+            
+            for (let i = 0; i < items.length; i++) {
+                // Actualizar contador
+                counter.classList.add('active');
+                counterValue.textContent = i + 1;
+                status.textContent = `Iteración ${i + 1}: Calculando 5 × ${i + 1} = ${5 * (i + 1)}`;
+                
+                await sleep(600);
+                
+                // Marcar item procesado
+                items[i].textContent = `5 × ${i + 1} = ${5 * (i + 1)}`;
+                items[i].classList.add('processed');
+                counter.classList.remove('active');
+                
+                await sleep(400);
+            }
+            
+            status.textContent = '✅ Ciclo completado: Todas las iteraciones finalizadas';
+            loopRunning = false;
+        }
+
+        function resetLoop() {
+            loopRunning = false;
+            document.getElementById('counterValue').textContent = '1';
+            document.getElementById('loopCounter').classList.remove('active');
+            const items = document.querySelectorAll('.loop-item');
+            items.forEach((item, idx) => {
+                item.classList.remove('processed');
+                item.textContent = `5 × ${idx + 1} = ?`;
+            });
+            document.getElementById('loopStatus').textContent = 'Haz clic en "Ejecutar Ciclo" para ver la iteración';
+        }
+
+        // ==================== 3. ARREGLOS - BUBBLE SORT ====================
+        let sortArray = [45, 23, 78, 12, 67];
+        let isSorting = false;
+
+        function initSort() {
+            const container = document.getElementById('sortContainer');
+            container.innerHTML = '';
+            sortArray.forEach((val, idx) => {
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = `${val * 1.5}px`;
+                bar.id = `bar${idx}`;
+                bar.textContent = val;
+                container.appendChild(bar);
+            });
+        }
+
+        async function startSort() {
+            if (isSorting) return;
+            isSorting = true;
+            const status = document.getElementById('sortStatus');
+            
+            for (let i = 0; i < sortArray.length; i++) {
+                for (let j = 0; j < sortArray.length - i - 1; j++) {
+                    // Comparar
+                    document.getElementById(`bar${j}`).classList.add('comparing');
+                    document.getElementById(`bar${j+1}`).classList.add('comparing');
+                    status.textContent = `Comparando: ${sortArray[j]} > ${sortArray[j+1]}?`;
+                    
+                    await sleep(700);
+                    
+                    if (sortArray[j] > sortArray[j+1]) {
+                        // Intercambiar
+                        status.textContent = `¡Intercambio! ${sortArray[j]} ↔ ${sortArray[j+1]}`;
+                        document.getElementById(`bar${j}`).classList.add('swapping');
+                        document.getElementById(`bar${j+1}`).classList.add('swapping');
+                        
+                        let temp = sortArray[j];
+                        sortArray[j] = sortArray[j+1];
+                        sortArray[j+1] = temp;
+                        
+                        document.getElementById(`bar${j}`).style.height = `${sortArray[j] * 1.5}px`;
+                        document.getElementById(`bar${j+1}`).style.height = `${sortArray[j+1] * 1.5}px`;
+                        document.getElementById(`bar${j}`).textContent = sortArray[j];
+                        document.getElementById(`bar${j+1}`).textContent = sortArray[j+1];
+                        
+                        await sleep(700);
+                        document.getElementById(`bar${j}`).classList.remove('swapping');
+                        document.getElementById(`bar${j+1}`).classList.remove('swapping');
+                    } else {
+                        status.textContent = `No se intercambia: ${sortArray[j]} ≤ ${sortArray[j+1]}`;
+                        await sleep(500);
+                    }
+                    
+                    document.getElementById(`bar${j}`).classList.remove('comparing');
+                    document.getElementById(`bar${j+1}`).classList.remove('comparing');
+                }
+                // Marcar como ordenado
+                document.getElementById(`bar${sortArray.length - i - 1}`).classList.add('sorted');
+            }
+            
+            status.textContent = '✅ Vector ordenado correctamente';
+            isSorting = false;
+        }
+
+        function resetSort() {
+            isSorting = false;
+            sortArray = [45, 23, 78, 12, 67];
+            initSort();
+            document.getElementById('sortStatus').textContent = 'Haz clic en "Ordenar Vector" para comenzar';
+        }
+
+        // ==================== 4. BÚSQUEDA BINARIA ====================
+        async function startBinarySearch() {
+            resetSearch();
+            const target = 42;
+            const array = [10, 25, 32, 42, 58, 67, 89, 95];
+            const items = document.querySelectorAll('.array-item');
+            const status = document.getElementById('searchStatus');
+            
+            let left = 0;
+            let right = array.length - 1;
+            
+            while (left <= right) {
+                // Marcar rango actual
+                items.forEach((item, idx) => {
+                    if (idx < left || idx > right) {
+                        item.classList.add('rejected');
+                    }
+                });
+                
+                const mid = Math.floor((left + right) / 2);
+                const midItem = items[mid];
+                
+                midItem.classList.add('active');
+                status.textContent = `Buscando en índices [${left}..${right}], medio=${mid} (valor ${array[mid]})`;
+                
+                await sleep(1200);
+                
+                if (array[mid] === target) {
+                    midItem.classList.remove('active');
+                    midItem.classList.add('found');
+                    status.textContent = `✅ ¡Encontrado! ${target} está en la posición ${mid + 1}`;
+                    return;
+                } else if (array[mid] < target) {
+                    status.textContent = `${array[mid]} < ${target}, buscar en mitad derecha`;
+                    left = mid + 1;
+                } else {
+                    status.textContent = `${array[mid]} > ${target}, buscar en mitad izquierda`;
+                    right = mid - 1;
+                }
+                
+                midItem.classList.remove('active');
+                await sleep(800);
+            }
+        }
+
+        function resetSearch() {
+            const items = document.querySelectorAll('.array-item');
+            items.forEach(item => {
+                item.classList.remove('active', 'found', 'rejected');
+            });
+            document.getElementById('searchStatus').textContent = 'Haz clic en "Buscar" para iniciar la búsqueda binaria';
+        }
+
+        // ==================== 5. RECURSIVIDAD ====================
+        async function startRecursion() {
+            resetRecursion();
+            const items = document.querySelectorAll('.stack-item');
+            const status = document.getElementById('recursionStatus');
+            const results = [120, 24, 6, 2, 1];
+            
+            // Fase de expansión (llamadas)
+            status.textContent = 'Fase de expansión: Llamadas recursivas...';
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.add('active');
+                await sleep(700);
+            }
+            
+            await sleep(500);
+            
+            // Fase de resolución (retornos)
+            status.textContent = 'Fase de resolución: Retornando valores...';
+            for (let i = items.length - 1; i >= 0; i--) {
+                items[i].classList.remove('active');
+                items[i].classList.add('resolved');
+                
+                // Actualizar texto con resultado
+                const baseTexts = [
+                    'factorial(5) = 5 × 24 = 120',
+                    'factorial(4) = 4 × 6 = 24',
+                    'factorial(3) = 3 × 2 = 6',
+                    'factorial(2) = 2 × 1 = 2',
+                    'factorial(1) = 1'
+                ];
+                items[i].textContent = baseTexts[i];
+                
+                status.textContent = `Retornando: ${results[i]}`;
+                await sleep(700);
+            }
+            
+            status.textContent = '✅ Resultado final: factorial(5) = 120';
+        }
+
+        function resetRecursion() {
+            const items = document.querySelectorAll('.stack-item');
+            const texts = [
+                'factorial(5) = 5 × factorial(4)',
+                'factorial(4) = 4 × factorial(3)',
+                'factorial(3) = 3 × factorial(2)',
+                'factorial(2) = 2 × factorial(1)',
+                'factorial(1) = 1 (Caso Base)'
+            ];
+            items.forEach((item, idx) => {
+                item.classList.remove('active', 'resolved');
+                item.textContent = texts[idx];
+            });
+            document.getElementById('recursionStatus').textContent = 'Haz clic en "Ejecutar Recursión" para ver la pila de llamadas';
+        }
+
+        // Inicializar
+        initSort();
+        resetCondition();
+        resetLoop();
+        resetSearch();
+        resetRecursion();
+    </script>
+</body>
+</html>
