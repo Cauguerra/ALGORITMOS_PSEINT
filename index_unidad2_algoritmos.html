@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Algoritmos · Grado 9° · Tecnología e Informática</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0f1d3a;--teal:#0d9488;--teal2:#14b8a6;--tealL:#ccfbf1;--purple:#7c3aed;--purpleL:#ede9fe;--amber:#d97706;--amberL:#fef3c7;--red:#dc2626;--redL:#fee2e2;--green:#16a34a;--greenL:#dcfce7;--bg:#f0f4f8;--surface:#fff;--border:#e2e8f0;--text:#1e293b;--muted:#64748b;}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text)}
+
+/* NAV */
+.top-nav{background:var(--navy);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.4)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;padding:0 12px;overflow-x:auto}
+.nav-logo{color:#fff;font-weight:900;font-size:1.1rem;padding:13px 16px 13px 0;border-right:1px solid rgba(255,255,255,.15);margin-right:6px;white-space:nowrap;flex-shrink:0}
+.nav-logo span{color:var(--teal2)}
+.nav-tab{background:none;border:none;border-bottom:3px solid transparent;color:rgba(255,255,255,.65);font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;padding:13px 14px;cursor:pointer;white-space:nowrap;transition:.2s}
+.nav-tab:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-tab.active{color:var(--teal2);border-bottom-color:var(--teal2)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#1a3060 100%);color:#fff;padding:48px 20px 40px;text-align:center}
+.hero-badge{display:inline-block;background:rgba(13,148,136,.25);color:var(--teal2);border:1px solid var(--teal2);border-radius:20px;padding:4px 14px;font-size:.75rem;font-weight:700;letter-spacing:.08em;margin-bottom:14px}
+.hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;line-height:1.1;margin-bottom:10px}
+.hero h1 span{color:var(--teal2)}
+.hero-sub{font-size:.95rem;color:rgba(255,255,255,.6);max-width:660px;margin:0 auto 24px;line-height:1.6}
+.hero-stats{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+.stat-num{font-size:1.9rem;font-weight:900;color:var(--teal2)}
+.stat-lab{font-size:.7rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em}
+.hero-pq{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-left:4px solid var(--teal2);border-radius:8px;padding:14px 20px;max-width:760px;margin:0 auto;text-align:left}
+.hero-pq label{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--teal2);font-weight:700;display:block;margin-bottom:5px}
+.hero-pq p{font-size:.9rem;color:rgba(255,255,255,.82);line-height:1.6;font-style:italic}
+
+/* MAIN */
+.main{max-width:1200px;margin:0 auto;padding:28px 14px}
+.sec{display:none}.sec.active{display:block}
+.sec-title{font-size:1.5rem;font-weight:900;color:var(--navy);margin-bottom:4px}
+.sec-title span{color:var(--teal)}
+.sec-desc{color:var(--muted);font-size:.9rem;margin-bottom:22px}
+
+/* PHASE PILLS */
+.phase-bar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px}
+.ppill{padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:.2s;font-family:'Nunito',sans-serif}
+.ppill.active,.ppill:hover{transform:translateY(-1px)}
+.pp-all{background:var(--navy);color:#fff;border-color:var(--navy)}
+.pp-em{background:#e6fff9;color:#065f46;border-color:#0d9488}
+.pp-de{background:#e0f2fe;color:#0c4a6e;border-color:#0284c7}
+.pp-id{background:#ede9fe;color:#4c1d95;border-color:#7c3aed}
+.pp-pr{background:#fef3c7;color:#78350f;border-color:#d97706}
+.pp-te{background:#fee2e2;color:#7f1d1d;border-color:#dc2626}
+
+/* SESSION CARD */
+.sess-card{background:var(--surface);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:.2s}
+.sess-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.1)}
+.sess-head{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;user-select:none}
+.sess-num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.05rem;color:#fff;flex-shrink:0}
+.sess-title{font-weight:800;font-size:1rem;color:var(--navy)}
+.sess-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:3px}
+.badge{display:inline-block;padding:2px 9px;border-radius:10px;font-size:.7rem;font-weight:700}
+.b-em{background:#e6fff9;color:#065f46} .b-de{background:#e0f2fe;color:#0c4a6e}
+.b-id{background:#ede9fe;color:#4c1d95} .b-pr{background:#fef3c7;color:#78350f}
+.b-te{background:#fee2e2;color:#7f1d1d} .b-wk{background:#f1f5f9;color:var(--muted)}
+.b-dba{background:#f0fdf4;color:#166534}
+.sess-arrow{font-size:1rem;color:var(--muted);transition:.3s;margin-left:auto;flex-shrink:0}
+.sess-card.open .sess-arrow{transform:rotate(180deg)}
+.sess-body{display:none;padding:0 18px 18px}
+.sess-card.open .sess-body{display:block}
+.sab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:9px;margin-bottom:14px}
+.sab{padding:10px 13px;border-radius:8px;border-left:4px solid}
+.sab-c{background:#f0fdf4;border-color:var(--green)} .sab-h{background:#eff6ff;border-color:#2563eb} .sab-s{background:#fdf4ff;border-color:#9333ea}
+.sab-lbl{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.sab-txt{font-size:.82rem;line-height:1.5}
+.mom{border-radius:8px;overflow:hidden;border:1px solid var(--border);margin-bottom:8px}
+.mom-head{display:flex;align-items:center;gap:10px;padding:9px 13px;font-weight:700;font-size:.85rem;color:#fff}
+.mom-ini .mom-head{background:#0d9488} .mom-des .mom-des-h{background:#7c3aed} .mom-des>.mom-head{background:#7c3aed} .mom-cie .mom-head{background:#dc2626}
+.mom-body{padding:10px 13px}
+.mom-tit{font-weight:700;color:var(--navy);margin-bottom:5px;font-size:.87rem}
+.mom-desc{font-size:.84rem;line-height:1.55;color:var(--text);margin-bottom:7px}
+.mom-rec{font-size:.77rem;color:var(--muted);font-style:italic}
+.mom-rec::before{content:"📌 ";font-style:normal}
+.eval-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border-radius:8px;overflow:hidden;border:1px solid var(--border);margin-top:6px}
+.eval-h{background:var(--navy);color:#fff;font-size:.7rem;font-weight:700;text-transform:uppercase;padding:8px 10px}
+.eval-v{background:#f8fafc;font-size:.83rem;padding:8px 10px;line-height:1.4}
+
+/* EXERCISES */
+.ex-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.fb{padding:7px 15px;border-radius:20px;border:2px solid var(--border);background:var(--surface);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:.2s}
+.fb.active,.fb:hover{border-color:var(--teal);color:var(--teal);background:var(--tealL)}
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.ex-card{background:var(--surface);border-radius:10px;border:1px solid var(--border);overflow:hidden}
+.ex-head{display:flex;align-items:center;gap:10px;padding:11px 13px}
+.ex-num{width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.88rem;color:#fff;flex-shrink:0}
+.ex-t .ex-num{background:var(--teal)} .ex-c .ex-num{background:var(--purple)}
+.ex-b .ex-num{background:var(--amber)} .ex-co .ex-num{background:var(--red)}
+.ex-title{font-weight:700;font-size:.9rem;color:var(--navy)}
+.ex-meta{font-size:.72rem;color:var(--muted);margin-top:2px}
+.ex-enunc{font-size:.82rem;color:var(--muted);padding:7px 13px 9px;border-top:1px solid var(--border);line-height:1.5}
+.code-blk{background:#0f1d3a;border-radius:7px;padding:12px;margin:0 13px 13px;overflow-x:auto}
+.code-blk pre{font-family:'Fira Code',monospace;font-size:.77rem;line-height:1.65;color:#e2f8f5;white-space:pre;margin:0}
+.kw{color:#7dd3fc} .str{color:#fcd34d} .nm{color:#f9a8d4} .cm{color:#6b7280;font-style:italic}
+
+/* IDEVICES */
+.idev-card{background:var(--surface);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.idev-hdr{padding:14px 18px;display:flex;align-items:center;gap:12px}
+.idev-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.idev-ttl{font-weight:800;font-size:.95rem;color:var(--navy)}
+.idev-sub{font-size:.75rem;color:var(--muted);margin-top:2px}
+.idev-body{padding:18px}
+.quiz-q{margin-bottom:18px;padding:14px;background:#f8fafc;border-radius:8px;border-left:4px solid var(--teal)}
+.quiz-qtxt{font-weight:700;font-size:.9rem;margin-bottom:10px;line-height:1.5}
+.quiz-opts{display:flex;flex-direction:column;gap:6px}
+.qopt{padding:8px 13px;border-radius:7px;border:2px solid var(--border);background:#fff;cursor:pointer;font-size:.86rem;font-family:'Nunito',sans-serif;font-weight:600;transition:.2s;text-align:left}
+.qopt:hover{border-color:var(--teal);background:var(--tealL)}
+.qopt.ok{border-color:var(--green)!important;background:var(--greenL)!important;color:var(--green)!important}
+.qopt.ko{border-color:var(--red)!important;background:var(--redL)!important;color:var(--red)!important}
+.qfb{margin-top:8px;padding:9px 13px;border-radius:7px;font-size:.82rem;display:none;line-height:1.5}
+.qfb.show{display:block} .qfb.fbok{background:var(--greenL);color:var(--green)} .qfb.fbko{background:var(--redL);color:var(--red)}
+.quiz-score{text-align:center;padding:14px;background:var(--navy);color:#fff;border-radius:8px;font-size:1rem;font-weight:800;display:none;margin-top:12px}
+.quiz-score.show{display:block}
+.btn{padding:8px 20px;border-radius:7px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.86rem;cursor:pointer;border:none;transition:.2s}
+.btn-t{background:var(--teal);color:#fff} .btn-t:hover{background:var(--teal2)}
+.btn-s{background:#f1f5f9;color:var(--navy);border:2px solid var(--border)} .btn-s:hover{border-color:var(--teal)}
+.qactions{text-align:center;margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+
+/* MATCHING */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+@media(max-width:580px){.match-grid{grid-template-columns:1fr}}
+.match-col-lbl{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:7px}
+.match-item{padding:9px 13px;border-radius:7px;border:2px solid var(--border);cursor:pointer;font-size:.84rem;font-weight:600;transition:.2s;user-select:none;margin-bottom:5px}
+.match-item:hover{border-color:var(--teal);background:var(--tealL)}
+.match-item.sel{border-color:var(--navy);background:var(--navy);color:#fff}
+.match-item.mok{border-color:var(--green);background:var(--greenL);color:var(--green);cursor:default}
+.match-item.mko{border-color:var(--red);background:var(--redL);color:var(--red)}
+.match-fb{margin-top:8px;text-align:center;font-weight:700;font-size:.88rem}
+
+/* CLOZE */
+.cloze-blk{background:#f8fafc;border-radius:8px;padding:14px;margin-bottom:12px;border-left:4px solid var(--purple)}
+.cloze-lbl{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--purple);margin-bottom:8px}
+.cloze-code{font-family:'Fira Code',monospace;font-size:.83rem;line-height:2;color:var(--navy)}
+.cinput{font-family:'Fira Code',monospace;font-size:.83rem;border:2px solid var(--border);border-radius:4px;padding:1px 7px;background:#fff;width:110px;text-align:center;color:var(--navy)}
+.cinput:focus{outline:none;border-color:var(--purple)}
+.cinput.cok{border-color:var(--green);background:var(--greenL)}
+.cinput.cko{border-color:var(--red);background:var(--redL)}
+
+/* ORDERING */
+.ord-list{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.ord-item{padding:10px 14px;background:#f8fafc;border:2px solid var(--border);border-radius:7px;cursor:grab;font-size:.86rem;font-weight:600;display:flex;align-items:center;gap:10px;user-select:none;transition:.2s}
+.ord-item:hover{border-color:var(--amber);background:var(--amberL)}
+.ord-item.dragging{opacity:.4}
+.ord-num{width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;flex-shrink:0}
+.ord-item.iok .ord-num{background:var(--green)} .ord-item.iko .ord-num{background:var(--red)}
+.ord-arrows{margin-left:auto;display:flex;gap:4px}
+.ord-arrows button{background:none;border:1px solid #ccc;border-radius:4px;cursor:pointer;padding:1px 6px;font-size:.82rem}
+
+/* MEMORY */
+.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+@media(max-width:440px){.mem-grid{grid-template-columns:repeat(3,1fr)}}
+.mem-card{height:74px;perspective:500px;cursor:pointer}
+.mem-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:.4s}
+.mem-card.flipped .mem-inner,.mem-card.matched .mem-inner{transform:rotateY(180deg)}
+.mem-front,.mem-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:7px;display:flex;align-items:center;justify-content:center;text-align:center;padding:5px;font-size:.75rem;font-weight:700}
+.mem-front{background:var(--navy);color:var(--teal2);font-size:1.3rem}
+.mem-back{background:#f0f9ff;border:2px solid var(--teal);color:var(--navy);transform:rotateY(180deg);line-height:1.3}
+.mem-card.matched .mem-back{background:var(--greenL);border-color:var(--green);color:var(--green)}
+.mem-stats{display:flex;gap:14px;justify-content:center;margin-bottom:12px;font-size:.86rem;font-weight:700}
+
+/* CROSSWORD */
+.cross-wrap{overflow-x:auto;margin-bottom:12px}
+.cross-grid{display:inline-grid;gap:2px}
+.cross-cell{width:30px;height:30px;border:2px solid var(--navy);background:#fff;position:relative}
+.cross-black{background:var(--navy);border-color:var(--navy)}
+.cross-cell input{width:100%;height:100%;border:none;background:transparent;text-align:center;font-family:'Fira Code',monospace;font-size:.85rem;font-weight:700;text-transform:uppercase;color:var(--navy);outline:none}
+.cross-cell input.cright{color:var(--green)} .cross-cell input.cwrong{color:var(--red)}
+.cross-num{position:absolute;top:1px;left:2px;font-size:.5rem;font-weight:700;color:var(--navy);font-family:'Nunito',sans-serif;line-height:1;pointer-events:none}
+.cross-clues{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+@media(max-width:520px){.cross-clues{grid-template-columns:1fr}}
+.cross-clue-grp h4{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin-bottom:7px}
+.cross-clue{font-size:.8rem;margin-bottom:4px;line-height:1.4;padding:2px 5px;border-radius:4px;cursor:pointer}
+.cross-clue:hover{background:var(--tealL)}
+.cross-clue span{font-weight:700;color:var(--teal);margin-right:4px}
+
+/* PLATAFORMAS */
+.plt-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.plt-tab{padding:9px 20px;border-radius:8px;border:2px solid;font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;cursor:pointer;transition:.2s}
+.plat-panel{display:none}
+.plat-panel.active{display:block}
+.k-card{background:var(--surface);border-radius:11px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.kq-display{padding:20px}
+.kq-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 18px;background:rgba(255,255,255,.1)}
+.kq-nav button{background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:6px;padding:5px 14px;cursor:pointer;font-weight:700;font-family:'Nunito',sans-serif}
+.menti-card{background:var(--surface);border-left:5px solid;border-radius:10px;border-top:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 16px;margin-bottom:12px}
+.edp-card{border-radius:12px;overflow:hidden;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.edp-head{padding:13px 16px;display:flex;align-items:center;gap:12px}
+.edp-body{padding:14px 16px}
+
+/* RECURSOS */
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.rec-card{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:16px;transition:.2s}
+.rec-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.1);transform:translateY(-2px)}
+
+@media(max-width:600px){.ex-grid{grid-template-columns:1fr}}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">Grado <span>9°</span></div>
+    <button class="nav-tab active" onclick="showSec('inicio',this)">🏠 Inicio</button>
+    <button class="nav-tab" onclick="showSec('plan',this)">📋 Sesiones</button>
+    <button class="nav-tab" onclick="showSec('ejercicios',this)">💻 Ejercicios</button>
+    <button class="nav-tab" onclick="showSec('idevices',this)">🎮 iDevices</button>
+    <button class="nav-tab" onclick="showSec('plataformas',this)">🚀 Kahoot·Menti·Edu</button>
+    <button class="nav-tab" onclick="showSec('recursos',this)">📚 Recursos</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">TECNOLOGÍA E INFORMÁTICA · GRADO 9° · SEGUNDO PERÍODO · 2025</div>
+  <h1>Unidad 2: <span>Algoritmos</span></h1>
+  <p class="hero-sub">Diseño de soluciones usando pensamiento computacional, pseudocódigo PSeInt y diagramas de flujo. Metodología Design Thinking.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">10</div><div class="stat-lab">Sesiones</div></div>
+    <div class="stat"><div class="stat-num">38</div><div class="stat-lab">Ejercicios</div></div>
+    <div class="stat"><div class="stat-num">8</div><div class="stat-lab">iDevices</div></div>
+    <div class="stat"><div class="stat-num">42</div><div class="stat-lab">Preguntas Kahoot</div></div>
+  </div>
+  <div class="hero-pq">
+    <label>Pregunta Problematizadora</label>
+    <p>¿Cómo podemos representar de forma clara y ordenada una solución a un problema antes de escribir un solo código, y por qué es importante hacerlo así?</p>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- INICIO -->
+<section id="sec-inicio" class="sec active">
+  <div class="sec-title">Mapa de la <span>Unidad</span></div>
+  <div class="sec-desc">10 semanas · 5 fases Design Thinking · Haz clic en una sección para explorarla.</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:24px">
+    <div onclick="showSec('plan',document.querySelectorAll('.nav-tab')[1])" style="background:#fff;border-radius:11px;border:2px solid var(--teal);padding:18px;cursor:pointer" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
+      <div style="font-size:1.8rem;margin-bottom:7px">🗂️</div><div style="font-weight:800;color:var(--navy);margin-bottom:3px">Plan de Sesiones</div>
+      <div style="font-size:.8rem;color:var(--muted)">10 sesiones con 3 momentos pedagógicos, saberes y evaluación.</div>
+    </div>
+    <div onclick="showSec('ejercicios',document.querySelectorAll('.nav-tab')[2])" style="background:#fff;border-radius:11px;border:2px solid var(--purple);padding:18px;cursor:pointer" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
+      <div style="font-size:1.8rem;margin-bottom:7px">💡</div><div style="font-weight:800;color:var(--navy);margin-bottom:3px">Banco de Ejercicios</div>
+      <div style="font-size:.8rem;color:var(--muted)">38 ejercicios PSeInt resueltos: secuenciales, condicionales, bucles y combinados.</div>
+    </div>
+    <div onclick="showSec('idevices',document.querySelectorAll('.nav-tab')[3])" style="background:#fff;border-radius:11px;border:2px solid var(--amber);padding:18px;cursor:pointer" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
+      <div style="font-size:1.8rem;margin-bottom:7px">🎯</div><div style="font-weight:800;color:var(--navy);margin-bottom:3px">iDevices Interactivos</div>
+      <div style="font-size:.8rem;color:var(--muted)">Quiz, matching, cloze, crucigrama, memoria y ordenamiento.</div>
+    </div>
+    <div onclick="showSec('plataformas',document.querySelectorAll('.nav-tab')[4])" style="background:#fff;border-radius:11px;border:2px solid #46178f;padding:18px;cursor:pointer" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
+      <div style="font-size:1.8rem;margin-bottom:7px">🚀</div><div style="font-weight:800;color:var(--navy);margin-bottom:3px">Kahoot · Menti · Edu</div>
+      <div style="font-size:.8rem;color:var(--muted)">42 preguntas Kahoot, 10 slides Mentimeter y 6 actividades Educaplay.</div>
+    </div>
+  </div>
+  <div style="background:#fff;border-radius:11px;border:1px solid var(--border);overflow:hidden">
+    <div style="background:var(--navy);color:#fff;padding:12px 18px;font-weight:800;font-size:.9rem">📅 Distribución por semanas — Design Thinking</div>
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.83rem;min-width:650px">
+      <tr style="background:#f1f5f9"><th style="padding:8px 12px;text-align:left;font-weight:800;border-bottom:2px solid var(--border)">Sem</th><th style="padding:8px 12px;text-align:left;font-weight:800;border-bottom:2px solid var(--border)">Sesión</th><th style="padding:8px 12px;text-align:left;font-weight:800;border-bottom:2px solid var(--border)">Fase</th><th style="padding:8px 12px;text-align:left;font-weight:800;border-bottom:2px solid var(--border)">DBA</th><th style="padding:8px 12px;text-align:left;font-weight:800;border-bottom:2px solid var(--border)">Estructura PSeInt</th></tr>
+      <tr><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">1</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-weight:700">Algoritmos en mi mundo</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9"><span class="badge b-em">Empatizar</span></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--green)">1,4</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">Conceptual</td></tr>
+      <tr style="background:#fafafa"><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">2</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-weight:700">Descomposición de problemas</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9"><span class="badge b-em">Empatizar</span></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--green)">1,3</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">Conceptual</td></tr>
+      <tr><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">3</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-weight:700">Primeros pasos en PSeInt</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9"><span class="badge b-de">Definir</span></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--green)">2</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-family:monospace;color:var(--teal);font-size:.78rem">Definir · Leer · Escribir</td></tr>
+      <tr style="background:#fafafa"><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">4</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-weight:700">Estructura Secuencial</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9"><span class="badge b-de">Definir</span></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--green)">2</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-family:monospace;color:var(--teal);font-size:.78rem">Secuencial ←</td></tr>
+      <tr><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">5</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-weight:700">Si-Entonces-SiNo</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9"><span class="badge b-id">Idear</span></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--green)">3</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-family:monospace;color:var(--teal);font-size:.78rem">Si … SiNo … FinSi</td></tr>
+      <tr style="background:#fafafa"><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">6</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-weight:700">Diagramas y Según Hacer</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9"><span class="badge b-id">Idear</span></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--green)">2,3</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-family:monospace;color:var(--teal);font-size:.78rem">Segun … Hacer</td></tr>
+      <tr><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">7</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-weight:700">Estructura Para (For)</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9"><span class="badge b-pr">Prototipar</span></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--green)">3</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-family:monospace;color:var(--teal);font-size:.78rem">Para … FinPara</td></tr>
+      <tr style="background:#fafafa"><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">8</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-weight:700">Mientras y Repetir-Hasta</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9"><span class="badge b-pr">Prototipar</span></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--green)">3</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-family:monospace;color:var(--teal);font-size:.78rem">Mientras · Repetir-Hasta</td></tr>
+      <tr><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--muted)">9</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-weight:700">Algoritmos Combinados</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9"><span class="badge b-te">Testear</span></td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;color:var(--green)">1,2,3,4</td><td style="padding:7px 12px;border-bottom:1px solid #f1f5f9;font-family:monospace;color:var(--teal);font-size:.78rem">Todos combinados</td></tr>
+      <tr style="background:#fafafa"><td style="padding:7px 12px;color:var(--muted)">10</td><td style="padding:7px 12px;font-weight:700">Proyecto Integrador</td><td style="padding:7px 12px"><span class="badge b-te">Testear</span></td><td style="padding:7px 12px;color:var(--green)">1,2,3,4</td><td style="padding:7px 12px;color:var(--muted)">Evaluación sumativa</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- PLAN -->
+<section id="sec-plan" class="sec">
+  <div class="sec-title">Plan de <span>Sesiones</span></div>
+  <div class="sec-desc">10 sesiones con 3 momentos pedagógicos cada una. Haz clic para expandir.</div>
+  <div class="phase-bar">
+    <button class="ppill pp-all active" onclick="filterSess('all',this)">Todas</button>
+    <button class="ppill pp-em" onclick="filterSess('Empatizar',this)">🔍 Empatizar</button>
+    <button class="ppill pp-de" onclick="filterSess('Definir',this)">📐 Definir</button>
+    <button class="ppill pp-id" onclick="filterSess('Idear',this)">💡 Idear</button>
+    <button class="ppill pp-pr" onclick="filterSess('Prototipar',this)">🔧 Prototipar</button>
+    <button class="ppill pp-te" onclick="filterSess('Testear',this)">✅ Testear</button>
+  </div>
+  <div id="sessions-list"></div>
+</section>
+
+<!-- EJERCICIOS -->
+<section id="sec-ejercicios" class="sec">
+  <div class="sec-title">Banco de <span>Ejercicios PSeInt</span></div>
+  <div class="sec-desc">38 ejercicios resueltos con código PSeInt completo. Filtra por tipo de estructura.</div>
+  <div class="ex-toolbar">
+    <button class="fb active" onclick="filterEx('all',this)">Todos (38)</button>
+    <button class="fb" onclick="filterEx('Secuencial',this)">🟢 Secuenciales (10)</button>
+    <button class="fb" onclick="filterEx('Condicional',this)">🟣 Condicionales (10)</button>
+    <button class="fb" onclick="filterEx('Bucle',this)">🟡 Bucles (10)</button>
+    <button class="fb" onclick="filterEx('Combinado',this)">🔴 Combinados (8)</button>
+  </div>
+  <div class="ex-grid" id="ex-grid"></div>
+</section>
+
+<!-- IDEVICES -->
+<section id="sec-idevices" class="sec">
+  <div class="sec-title"><span>iDevices</span> Interactivos</div>
+  <div class="sec-desc">Actividades equivalentes a eXeLearning, funcionan directamente en el navegador.</div>
+  <div id="idev-container"></div>
+</section>
+
+<!-- PLATAFORMAS -->
+<section id="sec-plataformas" class="sec">
+  <div class="sec-title">Kahoot · Mentimeter · <span>Educaplay</span></div>
+  <div class="sec-desc">Contenido listo para cada plataforma. Descarga el Excel para importar directamente a Kahoot.</div>
+  <div style="background:linear-gradient(135deg,var(--navy) 0%,#1a3a6e 100%);border-radius:14px;padding:24px 28px;margin-bottom:22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 6px 24px rgba(0,0,0,.2)">
+    <div style="font-size:2.5rem">📦</div>
+    <div style="flex:1;min-width:200px">
+      <div style="color:#fff;font-weight:900;font-size:1.1rem;margin-bottom:5px">Pack completo: 4 Quizzes Kahoot + 10 Slides Mentimeter + 6 Actividades Educaplay</div>
+      <div style="color:rgba(255,255,255,.6);font-size:.85rem">42 preguntas Kahoot en formato de importación directa · Todo el contenido listo para copiar en Mentimeter y Educaplay.</div>
+    </div>
+    <a href="Kahoot_Mentimeter_Educaplay_Algoritmos_G9.xlsx" download style="background:var(--teal);color:#fff;padding:11px 22px;border-radius:8px;font-weight:800;text-decoration:none;font-size:.88rem;white-space:nowrap">⬇️ Descargar Excel</a>
+  </div>
+  <div class="plt-tabs" id="plt-tabs">
+    <button class="plt-tab" style="background:#46178f;color:#fff;border-color:#46178f" onclick="showPlat('kahoot',this)">🎮 Kahoot (42 preguntas)</button>
+    <button class="plt-tab" style="background:#fff;color:#5C5CE0;border-color:#5C5CE0" onclick="showPlat('menti',this)">🎯 Mentimeter (10 slides)</button>
+    <button class="plt-tab" style="background:#fff;color:#E84545;border-color:#E84545" onclick="showPlat('educaplay',this)">🎲 Educaplay (6 actividades)</button>
+  </div>
+  <div id="plat-kahoot" class="plat-panel active">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-bottom:18px" id="kahoot-cards"></div>
+    <div class="k-card">
+      <div style="background:#46178f;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div style="color:#fff;font-weight:800;font-size:.92rem">🎮 Vista previa interactiva — navega las 42 preguntas</div>
+        <div class="kq-nav" style="background:transparent;padding:0;display:flex;align-items:center;gap:8px">
+          <button onclick="prevKQ()" style="background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:6px;padding:5px 12px;cursor:pointer;font-weight:700;font-family:Nunito,sans-serif">◀</button>
+          <span id="kq-counter" style="color:#fff;font-size:.82rem;font-weight:700">1/42</span>
+          <button onclick="nextKQ()" style="background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:6px;padding:5px 12px;cursor:pointer;font-weight:700;font-family:Nunito,sans-serif">▶</button>
+        </div>
+      </div>
+      <div id="kq-display" class="kq-display"></div>
+    </div>
+  </div>
+  <div id="plat-menti" class="plat-panel">
+    <div id="menti-container"></div>
+  </div>
+  <div id="plat-educaplay" class="plat-panel">
+    <div id="edp-container"></div>
+  </div>
+</section>
+
+<!-- RECURSOS -->
+<section id="sec-recursos" class="sec">
+  <div class="sec-title">Recursos y <span>Herramientas</span></div>
+  <div class="sec-desc">Herramientas, referencias y materiales de apoyo para la unidad.</div>
+  <div class="rec-grid">
+    <div class="rec-card"><div style="font-size:2rem;margin-bottom:8px">🖥️</div><div style="font-weight:800;color:var(--navy);margin-bottom:5px">PSeInt</div><div style="font-size:.84rem;color:var(--muted)">Herramienta principal para diseñar pseudocódigo en español. Disponible en pseint.sourceforge.io</div></div>
+    <div class="rec-card"><div style="font-size:2rem;margin-bottom:8px">📐</div><div style="font-weight:800;color:var(--navy);margin-bottom:5px">Draw.io / Lucidchart</div><div style="font-size:.84rem;color:var(--muted)">Para crear diagramas de flujo con símbolos ISO. Draw.io es gratuito y sin instalación.</div></div>
+    <div class="rec-card"><div style="font-size:2rem;margin-bottom:8px">📖</div><div style="font-weight:800;color:var(--navy);margin-bottom:5px">Fundamentos de Algoritmos</div><div style="font-size:.84rem;color:var(--muted)">Pastrana Moreno — Misión Sucre. Referencia principal del banco de ejercicios.</div></div>
+    <div class="rec-card"><div style="font-size:2rem;margin-bottom:8px">🎓</div><div style="font-weight:800;color:var(--navy);margin-bottom:5px">eXeLearning</div><div style="font-size:.84rem;color:var(--muted)">Plataforma para crear materiales educativos interactivos. Los iDevices de esta página son compatibles.</div></div>
+    <div class="rec-card"><div style="font-size:2rem;margin-bottom:8px">🌐</div><div style="font-weight:800;color:var(--navy);margin-bottom:5px">Programamos.es</div><div style="font-size:.84rem;color:var(--muted)">Actividades de pensamiento computacional para educación secundaria.</div></div>
+    <div class="rec-card"><div style="font-size:2rem;margin-bottom:8px">📊</div><div style="font-weight:800;color:var(--navy);margin-bottom:5px">DBA — MEN Colombia</div><div style="font-size:.84rem;color:var(--muted)">Derechos Básicos de Aprendizaje de Tecnología e Informática. Lineamientos para grado 9°.</div></div>
+  </div>
+</section>
+
+</div><!-- /main -->
+
+<script>
+'use strict';
+// ─── NAV ──────────────────────────────────────────────
+function showSec(id, btn) {
+  document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('sec-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ─── SESSIONS DATA ────────────────────────────────────
+var SESSIONS = [
+  {n:1,title:'Algoritmos en mi mundo',ph:'Empatizar',wk:1,dba:'DBA 1, DBA 4',
+   sc:'Definición de algoritmo, características, algoritmos cotidianos, pensamiento computacional: descomposición, abstracción, patrones, diseño de algoritmos.',
+   sh:'Identificar y crear algoritmos informales para situaciones cotidianas del contexto escolar y familiar.',
+   ss:'Reflexiona sobre cómo el pensamiento ordenado le ayuda en la vida diaria y el trabajo escolar.',
+   gf:'Guia_01_Guía_1_Algoritmos_en_mi_Mundo.html',gfase:'EMPATIZAR',gacts:['Escribe 3 pasos de tu día en orden','Ordena los 6 pasos del lavado de manos','Identifica 2 algoritmos cotidianos','¿Qué pasa si el orden es incorrecto?','Reflexión final: importancia del orden'],
+   im:{t:'Activación de saberes previos',d:'15 min',desc:'Video "¿Qué es un algoritmo?" y pregunta: ¿Alguna vez le diste instrucciones a alguien? ¿Qué pasó cuando no fueron claras? Respuesta en parejas y socialización grupal.',r:'Video, tablero, marcadores',videos:[{t:'Qué es un Algoritmo - Introducción',u:'https://www.youtube.com/embed/URUJD5NEXC8?rel=0'}]},
+   dm:{t:'Algoritmos cotidianos y pensamiento computacional',d:'60 min',desc:'Act. 1 (20 min): Grupos de 4 con tarjeta de tarea cotidiana. Escriben instrucciones paso a paso e intercambian para verificar. Act. 2 (20 min): Juego Robot Humano — un estudiante ejecuta instrucciones exactas. Act. 3 (20 min): Mapa del pensamiento computacional: descomposición, patrones, abstracción, diseño.',r:'Tarjetas, hojas, lápices, proyector'},
+   cm:{t:'Síntesis y metacognición',d:'15 min',desc:'Cada estudiante completa: "Un algoritmo es... y lo uso cuando...". Se recogen 3 ejemplos. Se presenta la pregunta problematizadora de la unidad.',r:'Cuaderno'},
+   prod:'Tarjeta con algoritmo cotidiano en 5 pasos',crit:'Claridad, secuencia lógica, completitud',tipo:'Formativa · Co-evaluación'},
+  {n:2,title:'Descomposición de problemas',ph:'Empatizar',wk:2,dba:'DBA 1, DBA 3',
+   sc:'Tipos de algoritmos: secuencial, condicional, iterativo. Técnica Top-Down. Cinco características de un buen algoritmo: finitud, definición, entradas, salidas, eficacia.',
+   sh:'Descomponer un problema complejo en subproblemas y clasificar el tipo de estructura que cada uno requiere.',
+   ss:'Administra el uso del tiempo y los recursos en el desarrollo de sus ideas.',
+   gf:'Guia_02_Guía_2_Descomposición_de_Problemas.html',gfase:'EMPATIZAR',gacts:['Organiza una tienda escolar en 4 tareas','Árbol de descomposición: Preparar sándwich','Clasifica estructuras: S / C / I','Descompón tu rutina de mañana en 5 partes','Reflexión: ¿por qué dividir facilita resolver?'],
+   im:{t:'El problema del semáforo',d:'15 min',desc:'Problema complejo: organizar una tienda escolar. ¿Por dónde empezarías? Los estudiantes identifican la necesidad de dividirlo en partes más pequeñas.',r:'Tablero, proyector',videos:[{t:'Pensamiento Computacional - Descomposición',u:'https://www.youtube.com/embed/otXL9gvnB0I?rel=0'}]},
+   dm:{t:'Técnica de descomposición y tipos de algoritmos',d:'60 min',desc:'Act. 1 (20 min): Técnica Top-Down. Árboles de descomposición de dos problemas. Act. 2 (20 min): Clasificar 6 situaciones: ¿secuencial, condicional o iterativa? Act. 3 (20 min): Diseñar algoritmo en lenguaje natural verificando las 5 características.',r:'Cuaderno, hojas de trabajo, lápices'},
+   cm:{t:'Exposición de árboles de descomposición',d:'15 min',desc:'Cada grupo expone su árbol. La clase comenta mejoras. Pregunta: ¿Cómo escribimos esto de forma que una computadora lo entienda?',r:'Tablero'},
+   prod:'Árbol de descomposición de un problema real',crit:'Correcta identificación del tipo, completitud, justificación',tipo:'Formativa · Heteroevaluación'},
+  {n:3,title:'Primeros pasos en PSeInt',ph:'Definir',wk:3,dba:'DBA 2',
+   sc:'PSeInt como herramienta. Variables y constantes. Tipos de datos: Entero, Real, Carácter, Lógico. Instrucciones Leer y Escribir. Operadores aritméticos, relacionales y lógicos.',
+   sh:'Construye un pseudocódigo básico en PSeInt con declaración de variables, entrada de datos y salida de resultados.',
+   ss:'Persevera frente a los errores de sintaxis y aprende del proceso de depuración como parte natural del aprendizaje.',
+   gf:'Guia_03_Guía_3_Primeros_Pasos_en_PSeInt.html',gfase:'DEFINIR',gacts:['Clasifica tipos de datos: 42 / 3.14 / “Hola”','Declara variables: nombre (texto) y edad (entero)','Diferencia entre Leer y Escribir','Verdadero o Falso: propiedades de variables','Pseudocódigo: pide nombre y muéstralo'],
+   im:{t:'¿Qué es PSeInt y por qué lo usamos?',d:'15 min',desc:'Demostración de la interfaz. El docente muestra el primer programa: solicitar el nombre y saludar. Los estudiantes predicen qué hará el programa antes de ejecutarlo.',r:'PSeInt instalado, proyector, computadores',videos:[{t:'PSeInt Tutorial Básico - Primeros pasos',u:'https://www.youtube.com/embed/OTv1xU1v7Es?rel=0'}]},
+   dm:{t:'Variables, tipos de datos y operadores',d:'60 min',desc:'Act. 1 (20 min): Variables como "cajas". Declarar variables de distintos tipos. Tabla: nombre, tipo, valor. Act. 2 (20 min): Taller de operadores — 10 expresiones matemáticas en PSeInt. Act. 3 (20 min): Ejercicios 1, 2 y 3 del banco (Área rectángulo, Celsius, Promedio).',r:'Computadores con PSeInt, cuaderno, hojas'},
+   cm:{t:'Mi primer programa funcional',d:'15 min',desc:'Cada estudiante comparte su pseudocódigo. Reflexión: ¿Qué fue lo más difícil? ¿Qué errores cometiste y cómo los resolviste?',r:'Computadores, tablero'},
+   prod:'3 pseudocódigos funcionales en PSeInt (ejercicios 1-3)',crit:'Correcta declaración de variables, lógica correcta, compilación exitosa',tipo:'Formativa · Autoevaluación'},
+  {n:4,title:'Estructura secuencial',ph:'Definir',wk:4,dba:'DBA 2',
+   sc:'Estructura secuencial: definición y características. Operador de asignación ←. Expresiones y cálculos matemáticos. Buenas prácticas: nombres descriptivos, comentarios.',
+   sh:'Diseña y ejecuta algoritmos secuenciales completos que resuelven problemas matemáticos y cotidianos.',
+   ss:'Valora el orden lógico como base del pensamiento computacional y la importancia de probar el código.',
+   gf:'Guia_04_Guía_4_Estructura_Secuencial.html',gfase:'DEFINIR',gacts:['Traza: x←5, y←3, z←x+y, resultado←z×2','Precedencia: a←10, b←2, c←a×b+3','Pseudocódigo: perímetro de un rectángulo','Conversión Celsius → Fahrenheit','Algoritmo: promedio de 3 notas'],
+   im:{t:'¿Cuándo la secuencia es suficiente?',d:'15 min',desc:'Tres problemas: uno secuencial, uno con decisión y uno con repetición. Los estudiantes votan por el tipo de estructura. Se analiza cuándo la secuencia tiene limitaciones.',r:'Proyector, tarjetas de votación',videos:[{t:'Estructura Secuencial en Pseudocódigo',u:'https://www.youtube.com/embed/t8h4U3j2_Ys?rel=0'}]},
+   dm:{t:'Banco de ejercicios secuenciales',d:'60 min',desc:'Trabajo individual: ejercicios 4 al 10. Metodología: 1) Leer enunciado, 2) Identificar entradas/salidas, 3) Diseñar en papel, 4) Codificar en PSeInt, 5) Probar con 2 juegos de datos. El docente circula y orienta.',r:'Computadores con PSeInt, cuaderno'},
+   cm:{t:'Socialización y retroalimentación',d:'15 min',desc:'Revisión del ejercicio 6 (Intercambio) y 9 (IMC). Los estudiantes sugieren mejoras. Se introduce: ¿Qué pasa si el dato ingresado es incorrecto?',r:'Tablero digital, proyector'},
+   prod:'Ejercicios 4-10 del banco en PSeInt',crit:'Funcionalidad, lógica correcta, prueba con datos válidos',tipo:'Formativa · Co-evaluación'},
+  {n:5,title:'Si-Entonces-SiNo',ph:'Idear',wk:5,dba:'DBA 3',
+   sc:'Estructura condicional simple y compuesta. Condiciones simples y compuestas con operadores Y, O, NO. Condicionales anidados.',
+   sh:'Aplica estructuras condicionales para resolver problemas que implican toma de decisiones simples, compuestas y anidadas.',
+   ss:'Reflexiona sobre cómo tomamos decisiones lógicas en la vida real y cómo se representan en un algoritmo.',
+   gf:'Guia_05_Guía_5_Si-Entonces-SiNo_(Condicionales).html',gfase:'IDEAR',gacts:['Evalúa condiciones con edad = 20','Completa Si-Entonces-SiNo (aprobado/reprobado)','Condicionales anidadas: positivo > 100','Condición compuesta: edad ≥ 18 Y carnet = Sí','Sistema de calificación 4 niveles'],
+   im:{t:'Decisiones en la vida real',d:'15 min',desc:'Dinámica: condiciones orales ("Si hace frío, me pongo abrigo"). Los estudiantes identifican: ¿Es simple o compuesta? ¿Cuántos caminos tiene?',r:'Tablero',videos:[{t:'Estructura Condicional Si-SiNo en PSeInt',u:'https://www.youtube.com/embed/rCd1EhfNCWQ?rel=0'}]},
+   dm:{t:'Estructuras condicionales en PSeInt',d:'60 min',desc:'Act. 1 (15 min): Docente codifica en vivo ejercicio 11. Los estudiantes replican. Act. 2 (25 min): En parejas, ejercicios 12, 13, 14. Explican las condiciones anidadas. Act. 3 (20 min): Independientemente, ejercicios 15, 16, 17.',r:'Computadores con PSeInt, cuaderno'},
+   cm:{t:'Tabla de verdad aplicada',d:'15 min',desc:'El docente construye la tabla de verdad del año bisiesto. Conexión con lógica proposicional en matemáticas.',r:'Tablero, proyector'},
+   prod:'Ejercicios 11-17 con condicionales en PSeInt',crit:'Corrección lógica, condiciones compuestas, anidamiento correcto',tipo:'Formativa · Heteroevaluación'},
+  {n:6,title:'Diagramas de flujo y Según Hacer',ph:'Idear',wk:6,dba:'DBA 2, DBA 3',
+   sc:'Segun Hacer (Switch/Case). Diagramas de flujo: símbolos ISO. DFD nivel 0: actores externos, procesos, flujos de datos.',
+   sh:'Representa soluciones en diagrama de flujo con símbolos correctos. Analiza un DFD nivel 0 identificando actores y flujos.',
+   ss:'Respeta opiniones del trabajo colaborativo. Valora la representación visual para comunicar soluciones.',
+   gf:'Guia_06_Guía_6_Diagramas_de_Flujo_y_Segun_Hacer.html',gfase:'IDEAR',gacts:['Identifica símbolos de diagrama de flujo','Completa menú Segun Hacer (4 opciones)','Dibuja DFD: número → par/impar','DFD Nivel 0: Sistema de Biblioteca','Pseudocódigo completo con Segun Hacer'],
+   im:{t:'¿Para qué sirve un diagrama?',d:'15 min',desc:'El mismo algoritmo en 3 representaciones: lenguaje natural, pseudocódigo y diagrama. Los estudiantes votan: ¿cuál es más fácil? ¿cuál comete menos errores?',r:'Proyector, imágenes impresas',videos:[{t:'Diagrama de Flujo - Símbolos y ejemplos',u:'https://www.youtube.com/embed/FTvXVTyHzpI?rel=0'},{t:'Estructura Segun Hacer en PSeInt',u:'https://www.youtube.com/embed/7qL2OjXNYww?rel=0'}]},
+   dm:{t:'Segun Hacer y representación visual',d:'60 min',desc:'Act. 1 (20 min): Segun Hacer con ejercicios 18, 19, 20. Act. 2 (20 min): Taller diagramas — representar ejercicios 12 y 15 en papel o Draw.io. Act. 3 (20 min): DFD nivel 0 de una librería escolar — identificar actores, entradas y salidas.',r:'Computadores, papel cuadriculado, Draw.io'},
+   cm:{t:'Exposición de diagramas',d:'15 min',desc:'3 grupos comparten sus diagramas. La clase verifica símbolos y lógica. Se presenta el DFD del sistema de calificaciones escolares.',r:'Tablero, proyector'},
+   prod:'Diagrama de flujo de 2 ejercicios + DFD nivel 0',crit:'Símbolos correctos, flujo lógico, identificación de actores',tipo:'Formativa · Co-evaluación'},
+  {n:7,title:'Estructura iterativa: Para (For)',ph:'Prototipar',wk:7,dba:'DBA 3',
+   sc:'Para (For): variable de control, valor inicial, valor final, paso/incremento. Contadores y acumuladores. Comparación entre Para, Mientras y Repetir-Hasta.',
+   sh:'Construye algoritmos con Para para repetición controlada. Identifica cuándo usar Para vs otros bucles.',
+   ss:'Participa activamente en resolución grupal compartiendo ideas con respeto.',
+   gf:'Guia_07_Guía_7_Bucle_Para_(For).html',gfase:'PROTOTIPAR',gacts:['¿Cuántas iteraciones en cada bucle Para?','Completa bucle: suma acumulada del 1 al 5','Tabla de multiplicar del 5 con Para','Diferencia entre contador y acumulador','Algoritmo: imprime 1–10 y muestra su suma'],
+   im:{t:'¿Cuándo necesitamos repetir?',d:'15 min',desc:'Juego: "Escribe tu nombre 5 veces". ¿Cómo le dirías a un robot que lo haga? Se formula la necesidad de repetición. Comparación: Para (sé cuántas veces) vs Mientras.',r:'Tablero, marcadores',videos:[{t:'Bucle Para (For) en PSeInt - Tutorial',u:'https://www.youtube.com/embed/Jlj8LEj7Xmk?rel=0'}]},
+   dm:{t:'Estructura Para en PSeInt',d:'60 min',desc:'Act. 1 (15 min): Docente codifica en vivo ejercicios 21 y 22. Se resalta variable de control, inicio, fin, paso. Act. 2 (25 min): Ejercicios 23, 24, 25 (Factorial, Fibonacci, Mayor en serie). Act. 3 (20 min): Reto creativo — algoritmo propio con Para.',r:'Computadores con PSeInt'},
+   cm:{t:'Construyendo con Para',d:'15 min',desc:'Revisión de Fibonacci y Mayor en serie. Reflexión: ¿Qué es un contador? ¿Qué es un acumulador? ¿Cuál es la diferencia?',r:'Proyector, tablero'},
+   prod:'Ejercicios 21-25 + algoritmo creativo propio con Para',crit:'Correcta estructura Para, uso de contador/acumulador, lógica correcta',tipo:'Formativa · Autoevaluación'},
+  {n:8,title:'Mientras, Repetir-Hasta y DFD nivel 1',ph:'Prototipar',wk:8,dba:'DBA 3',
+   sc:'Mientras (While): condición al inicio. Repetir-Hasta (Do-While): condición al final. Bucle infinito. DFD nivel 1: descomposición de procesos.',
+   sh:'Usa correctamente Mientras y Repetir-Hasta según el contexto. Construye el prototipo algorítmico del proyecto integrador.',
+   ss:'Administra el tiempo y recursos. Reflexiona sobre el riesgo del bucle infinito.',
+   gf:'Guia_08_Guía_8_Bucles_Mientras_y_Repetir-Hasta.html',gfase:'PROTOTIPAR',gacts:['Mientras vs Repetir con condición FALSA','Completa bucle Mientras: imprime 1 al 3','Pseudocódigo: Repetir-Hasta con suma','Cuándo usar Mientras / cuándo Repetir','Validación: pide número entre 1 y 10'],
+   im:{t:'La diferencia entre los tres bucles',d:'15 min',desc:'El mismo problema resuelto con Para, Mientras y Repetir-Hasta. ¿Cuál funciona siempre? ¿Cuál puede no ejecutarse nunca? ¿Cuál ejecuta al menos una vez?',r:'Proyector, tablero',videos:[{t:'Bucle Mientras (While) en PSeInt',u:'https://www.youtube.com/embed/g_Uu5pj-jSs?rel=0'},{t:'Bucle Repetir-Hasta en PSeInt',u:'https://www.youtube.com/embed/P3QL8xjb7q0?rel=0'}]},
+   dm:{t:'Mientras, Repetir-Hasta y prototipo del proyecto',d:'60 min',desc:'Act. 1 (20 min): Ejercicios 26, 27, 28 con Mientras. Act. 2 (20 min): Ejercicios 29, 30 con Repetir-Hasta. ¿Qué pasa si la condición nunca se cumple? Act. 3 (20 min): DFD nivel 1 y diseño del prototipo del proyecto integrador.',r:'Computadores, hojas para DFD'},
+   cm:{t:'Diseño del prototipo integrador',d:'15 min',desc:'Cada estudiante presenta el esquema del proyecto: ¿Qué resuelve? ¿Qué estructuras usará? ¿Cuáles son las entradas y salidas?',r:'Tablero'},
+   prod:'Ejercicios 26-30 + borrador del algoritmo del proyecto integrador',crit:'Correcta selección del bucle, condición de parada, diseño coherente',tipo:'Formativa · Heteroevaluación'},
+  {n:9,title:'Algoritmos combinados y depuración',ph:'Testear',wk:9,dba:'DBA 1, 2, 3, 4',
+   sc:'Algoritmos combinados: secuencial + condicional + iterativo. Depuración: errores de sintaxis, lógica y ejecución. Comparación de soluciones por eficiencia.',
+   sh:'Depura y mejora algoritmos existentes. Compara distintas soluciones e identifica cuál es más eficiente.',
+   ss:'El error es parte del aprendizaje. Reflexiona sobre el impacto del razonamiento lógico en la resolución de problemas.',
+   gf:'Guia_09_Guía_9_Algoritmos_Combinados_y_Depuración.html',gfase:'TESTEAR',gacts:['Identifica y corrige el error de sintaxis','Tabla MOD: par o impar (4 casos)','Algoritmo: 3 números → mayor + par/impar','Traza: bucle con acumulador (Para i←1…3)','Pseudocódigo: positivo / negativo / cero'],
+   im:{t:'El error es parte del aprendizaje',d:'15 min',desc:'El docente presenta 3 algoritmos con errores: sintaxis, lógica y ejecución. Los estudiantes identifican cada tipo y proponen correcciones.',r:'Proyector, hojas con algoritmos erróneos',videos:[{t:'Algoritmos Complejos y Depuración',u:'https://www.youtube.com/embed/s5kBVLwjIwM?rel=0'}]},
+   dm:{t:'Ejercicios combinados y depuración',d:'60 min',desc:'Act. 1 (25 min): Ejercicios 31, 32, 33 (Menú, Sistema calificaciones, Número primo). Act. 2 (20 min): Ejercicios 34, 35, 36 — énfasis en validación. Act. 3 (15 min): Depuración — cada estudiante corrige un algoritmo con error de lógica en tiempo definido.',r:'Computadores con PSeInt, hojas de depuración'},
+   cm:{t:'Comparando soluciones',d:'15 min',desc:'Dos soluciones al ejercicio 33 (Número primo): eficiente vs ineficiente. Los estudiantes identifican cuál es mejor y por qué. Introducción a la eficiencia algorítmica.',r:'Proyector, tablero'},
+   prod:'Ejercicios 31-37 + corrección del algoritmo con error',crit:'Integración correcta de estructuras, calidad del código, identificación del error',tipo:'Sumativa · Co-evaluación'},
+  {n:10,title:'Proyecto integrador y evaluación final',ph:'Testear',wk:10,dba:'DBA 1, 2, 3, 4',
+   sc:'Integración de todos los contenidos. Criterios de calidad de un algoritmo. Aplicaciones reales en tecnología, ciencias y vida cotidiana.',
+   sh:'Presenta un proyecto algorítmico con al menos 3 estructuras de control. Sustenta las decisiones de diseño.',
+   ss:'Ética digital y reflexión sobre el impacto del pensamiento computacional en problemas sociales.',
+   gf:'Guia_10_Guía_10_Proyecto_Integrador_Final.html',gfase:'TESTEAR',gacts:['Define el problema que vas a resolver','Identifica entradas y salidas','Descompón en 4 subproblemas','Pseudocódigo completo con todas las estructuras','Prueba el algoritmo con 3 datos diferentes'],
+   im:{t:'Presentación de criterios de evaluación',d:'15 min',desc:'El docente explica la rúbrica del proyecto integrador. Los estudiantes hacen preguntas. Se establecen grupos y orden de presentación.',r:'Rúbrica impresa, proyector'},
+   dm:{t:'Presentaciones y sustentaciones',d:'60 min',desc:'Cada estudiante/grupo presenta en 4 momentos: 1) Exposición del problema (2 min), 2) Explicación del algoritmo y estructuras (3 min), 3) Demostración en PSeInt con 3 pruebas (3 min), 4) Respuesta a preguntas (2 min). El grupo observador completa la rúbrica de co-evaluación.',r:'Computadores, proyector, rúbrica'},
+   cm:{t:'Cierre de la unidad y reflexión final',d:'15 min',desc:'Reflexión: ¿Qué aprendiste que no sabías? ¿Cómo cambió tu forma de pensar? ¿Dónde ves los algoritmos en tu vida? Conexión con Unidad 3: Scratch.',r:'Tablero de reflexiones'},
+   prod:'Proyecto integrador con algoritmo en PSeInt + DFD',crit:'Integración de estructuras, funcionalidad, creatividad, sustentación oral',tipo:'Sumativa · Heteroevaluación + Co-evaluación'},
+];
+
+var PH_COLOR = {Empatizar:'#0d9488',Definir:'#0284c7',Idear:'#7c3aed',Prototipar:'#d97706',Testear:'#dc2626'};
+var PH_CLASS = {Empatizar:'b-em',Definir:'b-de',Idear:'b-id',Prototipar:'b-pr',Testear:'b-te'};
+
+function renderSessions() {
+  var html = '';
+  SESSIONS.forEach(function(s) {
+    var col = PH_COLOR[s.ph] || '#0d9488';
+    html += '<div class="sess-card" data-ph="'+s.ph+'" id="ss'+s.n+'">';
+    html += '<div class="sess-head" onclick="toggleSess('+s.n+')">';
+    html += '<div class="sess-num" style="background:'+col+'">'+s.n+'</div>';
+    html += '<div style="flex:1"><div class="sess-title">'+s.title+'</div>';
+    html += '<div class="sess-meta"><span class="badge '+PH_CLASS[s.ph]+'">'+s.ph+'</span>';
+    html += '<span class="badge b-wk">Semana '+s.wk+'</span>';
+    html += '<span class="badge b-dba">'+s.dba+'</span></div></div>';
+    html += '<span class="sess-arrow">▼</span></div>';
+    html += '<div class="sess-body">';
+    html += '<div class="sab-grid">';
+    html += '<div class="sab sab-c"><div class="sab-lbl" style="color:var(--green)">🧠 Saber Conocer</div><div class="sab-txt">'+s.sc+'</div></div>';
+    html += '<div class="sab sab-h"><div class="sab-lbl" style="color:#2563eb">⚙️ Saber Hacer</div><div class="sab-txt">'+s.sh+'</div></div>';
+    html += '<div class="sab sab-s"><div class="sab-lbl" style="color:#9333ea">❤️ Saber Ser</div><div class="sab-txt">'+s.ss+'</div></div>';
+    html += '</div>';
+    html += renderMom('mom-ini','🟢 Inicio / Exploración',s.im);
+    html += renderMom('mom-des','🟣 Desarrollo / Estructuración',s.dm);
+    html += renderMom('mom-cie','🔴 Cierre / Transferencia',s.cm);
+    html += renderGuia(s);
+    html += '<div style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;margin-top:10px">Evaluación</div>';
+    html += '<div class="eval-grid">';
+    html += '<div class="eval-h">Producto</div><div class="eval-h">Criterios</div><div class="eval-h">Tipo</div>';
+    html += '<div class="eval-v">'+s.prod+'</div><div class="eval-v">'+s.crit+'</div><div class="eval-v">'+s.tipo+'</div>';
+    html += '</div></div></div>';
+  });
+  document.getElementById('sessions-list').innerHTML = html;
+}
+
+function getVideoHtml(videos) {
+  if (!videos || videos.length === 0) return '';
+  let h = '<div style="margin-top:9px;padding:9px 12px;background:#e0f9f5;border-radius:7px;border-left:4px solid #0d9488">';
+  h += '<div style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:#0d9488;margin-bottom:7px">📹 Videos recomendados</div>';
+  videos.forEach(function(v) {
+    h += '<div style="margin-bottom:8px"><div style="font-size:.82rem;font-weight:700;color:#0f1d3a;margin-bottom:4px">🎬 ' + v.t + '</div>';
+    h += '<iframe width="100%" height="200" src="' + v.u + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius:6px;"></iframe></div>';
+  });
+  h += '</div>';
+  return h;
+}
+
+
+var GUIA_TEORIA = {1:{t:'¿Qué es un Algoritmo?',d:'Un <strong>algoritmo</strong> es una secuencia de pasos ordenados para resolver un problema. Ejemplo: la receta de una arepa (ingredientes → preparación → resultado).'},2:{t:'Descomposición Top-Down',d:'La <strong>descomposición</strong> divide un problema grande en subproblemas manejables. Ejemplo: &quot;organizar una fiesta&quot; → invitar, comprar comida, decorar.'},3:{t:'PSeInt y Variables',d:'<strong>PSeInt</strong> permite escribir pseudocódigo en español. Una <strong>variable</strong> es una &quot;caja&quot; que guarda datos: Entero, Real, Carácter, Lógico.'},4:{t:'Estructura Secuencial',d:'Un algoritmo <strong>secuencial</strong> ejecuta instrucciones línea a línea. El operador <strong>&lt;-</strong> asigna valores. Ejemplo: <code>area &lt;- base * altura</code>'},5:{t:'Condicional Si-Entonces-SiNo',d:'La estructura <strong>Si-Entonces-SiNo</strong> bifurca el flujo según una condición. Operadores: =, &lt;&gt;, &gt;, &lt;, &gt;=, &lt;=, Y, O, NO.'},6:{t:'Diagramas de Flujo y Segun Hacer',d:'<strong>Símbolos:</strong> Óvalo=inicio/fin, Rectángulo=proceso, Diamante=decisión, Paralelogramo=E/S. <strong>Segun Hacer</strong> evalúa múltiples opciones como un menú.'},7:{t:'Bucle Para (For)',d:'El bucle <strong>Para</strong> repite código cuando sabes exactamente cuántas veces. Sintaxis: <code>Para i &lt;- 1 Hasta n Con Paso 1 Hacer</code>'},8:{t:'Mientras y Repetir-Hasta',d:'<strong>Mientras:</strong> verifica condición al INICIO (puede no ejecutarse). <strong>Repetir-Hasta:</strong> verifica al FINAL (ejecuta al menos una vez).'},9:{t:'Algoritmos Combinados y Depuración',d:'Los algoritmos <strong>combinados</strong> mezclan secuencial + condicional + iterativo. La <strong>depuración</strong> corrige errores de sintaxis, lógica y ejecución.'},10:{t:'Proyecto Integrador',d:'Aplicarás TODO lo aprendido: descomposición, variables, condicionales, bucles y depuración. Objetivo: resolver un problema real con PSeInt.'}};
+
+function buildGuiaHTML(s) {
+  var teoria = GUIA_TEORIA[s.n] || {t:'Concepto clave', d:'Ver material de la sesión.'};
+  var fase    = s.gfase || '';
+  var color   = {'EMPATIZAR':'#0d9488','DEFINIR':'#2563eb','IDEAR':'#7c3aed','PROTOTIPAR':'#d97706','TESTEAR':'#dc2626'}[fase] || '#0d9488';
+  var actos   = s.gacts || [];
+  var title   = 'Guía '+s.n+': '+s.title;
+
+  var acts_html = '';
+  var act_titles = [
+    'Activación / Exploración',
+    'Comprensión conceptual',
+    'Aplicación práctica',
+    'Análisis y reflexión',
+    'Creación / Producción'
+  ];
+  actos.forEach(function(a, i) {
+    acts_html += '<div style="border-left:4px solid '+color+';background:#fff;padding:18px 20px;border-radius:0 8px 8px 0;margin-bottom:16px">'
+      + '<div style="font-weight:700;color:'+color+';font-size:.95rem;margin-bottom:6px">✅ Actividad '+(i+1)+': '+act_titles[i]+'</div>'
+      + '<div style="font-size:.92rem;color:#334155;margin-bottom:12px">'+a+'</div>'
+      + '<div style="border-bottom:1px solid #cbd5e1;height:48px;margin-top:6px"></div>'
+      + '<div style="border-bottom:1px solid #cbd5e1;height:48px;margin-top:8px"></div>'
+      + '</div>';
+  });
+
+  return '<!DOCTYPE html><html lang="es"><head>'
+    + '<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+    + '<title>'+title+'</title>'
+    + '<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">'
+    + '<style>'
+    + '*{margin:0;padding:0;box-sizing:border-box;font-family:Outfit,sans-serif}'
+    + 'body{background:#f1f5f9;padding:40px 20px;color:#0f172a;line-height:1.6}'
+    + '.wrap{max-width:860px;background:#fff;margin:0 auto;padding:50px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.07)}'
+    + 'header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid '+color+';padding-bottom:18px;margin-bottom:28px}'
+    + '.logo{font-weight:800;font-size:1.4rem;color:'+color+'}'
+    + '.badge{background:'+color+';color:#fff;padding:5px 14px;border-radius:20px;font-size:.78rem;font-weight:700}'
+    + 'h1{font-size:1.9rem;color:'+color+';margin-bottom:8px}'
+    + '.theory{background:#f8fafc;border:1px solid #e2e8f0;padding:18px 20px;border-radius:10px;margin-bottom:28px}'
+    + '.theory h3{color:'+color+';font-size:1rem;margin-bottom:8px}'
+    + '.student{display:flex;gap:20px;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #e2e8f0;font-size:.9rem}'
+    + '.field{flex:1}label{font-weight:600;font-size:.8rem;color:#64748b;display:block;margin-bottom:4px}'
+    + '.line{border:none;border-bottom:1px solid #0f172a;width:100%;outline:none;font-family:Outfit,sans-serif;font-size:.9rem}'
+    + '.print-btn{position:fixed;bottom:28px;right:28px;background:'+color+';color:#fff;border:none;padding:14px 24px;border-radius:50px;cursor:pointer;font-weight:700;font-size:.88rem;box-shadow:0 8px 20px rgba(0,0,0,.2)}'
+    + 'footer{margin-top:40px;text-align:center;color:#94a3b8;font-size:.78rem;border-top:1px solid #e2e8f0;padding-top:18px}'
+    + '@media print{.print-btn{display:none}body{background:#fff;padding:0}.wrap{box-shadow:none;padding:24px}}'
+    + '</style></head><body>'
+    + '<div class="wrap">'
+    + '<header><div class="logo">DOCENTE TI</div><div class="badge">Guía '+s.n+' — '+fase+'</div></header>'
+    + '<h1>'+title+'</h1>'
+    + '<p style="margin-bottom:22px;color:#64748b;font-style:italic">Tecnología e Informática · Grado 9° · Segundo Período · Unidad 2: Algoritmos</p>'
+    + '<div class="theory"><h3>📚 '+teoria.t+'</h3><p style="font-size:.9rem">'+teoria.d+'</p></div>'
+    + '<div class="student">'
+    + '<div class="field"><label>Nombre completo</label><input class="line" type="text"></div>'
+    + '<div class="field" style="max-width:130px"><label>Fecha</label><input class="line" type="text" placeholder="dd/mm/aa"></div>'
+    + '<div class="field" style="max-width:110px"><label>Nota</label><input class="line" type="text"></div>'
+    + '</div>'
+    + acts_html
+    + '<footer>© 2026 DOCENTE TI — Innovación Educativa Tecnológica · Escuela Normal Superior Colombia</footer>'
+    + '</div>'
+    + '<button class="print-btn" onclick="window.print()">🖨️ Imprimir / PDF</button>'
+    + '</body></html>';
+}
+
+function downloadGuia(n) {
+  var s = SESSIONS.find(function(x){ return x.n === n; });
+  if (!s) return;
+  var contenido = buildGuiaHTML(s);
+  var blob = new Blob([contenido], {type: 'text/html;charset=utf-8'});
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'Guia_' + String(n).padStart(2,'0') + '_' + s.title.replace(/[^a-zA-Z0-9]/g,'_') + '.html';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 1000);
+}
+
+function renderGuia(s) {
+  if (!s.gf) return '';
+  var actos = s.gacts || [];
+  var fase = s.gfase || '';
+  var num = s.n || '';
+  var color = {'EMPATIZAR':'#0d9488','DEFINIR':'#2563eb','IDEAR':'#7c3aed','PROTOTIPAR':'#d97706','TESTEAR':'#dc2626'}[fase] || '#0284c7';
+  var h = '<div style="margin:18px 0 0 0;border:2px solid '+color+';border-radius:12px;overflow:hidden">';
+  // Encabezado guía
+  h += '<div style="background:'+color+';padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">';
+  h += '<div>';
+  h += '<div style="color:#fff;font-weight:800;font-size:1rem">📋 Guía '+num+' de Trabajo — Estudiante</div>';
+  h += '<div style="color:rgba(255,255,255,.85);font-size:.78rem;margin-top:2px">Fase '+fase+' · 5 actividades para resolver · Formato descargable</div>';
+  h += '</div>';
+  h += '<button onclick="downloadGuia('+s.n+')" style="background:#fff;color:'+color+';font-weight:700;font-size:.82rem;padding:8px 16px;border-radius:20px;border:none;cursor:pointer;white-space:nowrap">⬇ Descargar Guía</button>';
+  h += '</div>';
+  // Cuerpo: 5 actividades
+  h += '<div style="background:#fafafa;padding:14px 18px">';
+  h += '<div style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Actividades incluidas en esta guía</div>';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px">';
+  actos.forEach(function(a, i) {
+    h += '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:7px;padding:9px 12px;font-size:.82rem">';
+    h += '<span style="font-weight:700;color:'+color+'">Act. '+(i+1)+'</span> '+a;
+    h += '</div>';
+  });
+  h += '</div></div></div>';
+  return h;
+}
+
+
+function renderMom(cls, label, m) {
+  return '<div class="mom '+cls+'"><div class="mom-head">'+label+'<span style="font-size:.72rem;opacity:.8;margin-left:auto;font-weight:400">'+m.d+'</span></div><div class="mom-body"><div class="mom-tit">'+m.t+'</div><div class="mom-desc">'+m.desc+'</div><div class="mom-rec">'+m.r+'</div>'+(m.videos ? getVideoHtml(m.videos) : '')+'</div></div>';
+}
+function toggleSess(n) {
+  var c = document.getElementById('ss'+n);
+  c.classList.toggle('open');
+}
+function filterSess(ph, btn) {
+  document.querySelectorAll('.ppill').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.sess-card').forEach(function(c){
+    c.style.display = (ph==='all' || c.dataset.ph===ph) ? 'block' : 'none';
+  });
+}
+
+// ─── EXERCISES DATA ───────────────────────────────────
+var EX = [
+  {n:1,t:'Secuencial',s:4,title:'Área de un rectángulo',enunc:'Leer base y altura de un rectángulo. Calcular y mostrar su área.',code:'Algoritmo AreaRectangulo\n   Definir base, altura, area Como Real\n   Escribir "Base:"\n   Leer base\n   Escribir "Altura:"\n   Leer altura\n   area <- base * altura\n   Escribir "Área: ", area, " u²"\nFinAlgoritmo'},
+  {n:2,t:'Secuencial',s:4,title:'Celsius a Fahrenheit',enunc:'Leer temperatura en °C. Convertir a °F. Fórmula: F = (C×9/5)+32',code:'Algoritmo CelsiusFahrenheit\n   Definir c, f Como Real\n   Escribir "°C:"\n   Leer c\n   f <- (c * 9 / 5) + 32\n   Escribir c, "°C = ", f, "°F"\nFinAlgoritmo'},
+  {n:3,t:'Secuencial',s:4,title:'Promedio de tres notas',enunc:'Leer tres calificaciones. Calcular y mostrar el promedio.',code:'Algoritmo PromedioNotas\n   Definir n1, n2, n3, prom Como Real\n   Escribir "Nota 1:" : Leer n1\n   Escribir "Nota 2:" : Leer n2\n   Escribir "Nota 3:" : Leer n3\n   prom <- (n1+n2+n3)/3\n   Escribir "Promedio: ", prom\nFinAlgoritmo'},
+  {n:4,t:'Secuencial',s:4,title:'Cálculo de salario',enunc:'Leer horas trabajadas y valor por hora. Calcular salario bruto.',code:'Algoritmo Salario\n   Definir h, vh, sal Como Real\n   Escribir "Horas:" : Leer h\n   Escribir "Valor/hora:" : Leer vh\n   sal <- h * vh\n   Escribir "Salario: $", sal\nFinAlgoritmo'},
+  {n:5,t:'Secuencial',s:4,title:'Área y perímetro del círculo',enunc:'Leer el radio. Calcular área y perímetro. π = 3.14159',code:'Algoritmo Circulo\n   Definir r, area, per Como Real\n   Escribir "Radio:" : Leer r\n   area <- 3.14159 * r^2\n   per  <- 2 * 3.14159 * r\n   Escribir "Área: ", area\n   Escribir "Perímetro: ", per\nFinAlgoritmo'},
+  {n:6,t:'Secuencial',s:4,title:'Intercambio de variables',enunc:'Leer dos valores. Intercambiarlos con variable auxiliar.',code:'Algoritmo Intercambio\n   Definir a, b, aux Como Real\n   Escribir "A:" : Leer a\n   Escribir "B:" : Leer b\n   Escribir "Antes: A=",a," B=",b\n   aux <- a : a <- b : b <- aux\n   Escribir "Despues: A=",a," B=",b\nFinAlgoritmo'},
+  {n:7,t:'Secuencial',s:4,title:'Velocidad media',enunc:'Leer distancia (km) y tiempo (h). Calcular velocidad en km/h.',code:'Algoritmo VelocidadMedia\n   Definir d, t, v Como Real\n   Escribir "Distancia:" : Leer d\n   Escribir "Tiempo:" : Leer t\n   v <- d / t\n   Escribir "Velocidad: ", v, " km/h"\nFinAlgoritmo'},
+  {n:8,t:'Secuencial',s:4,title:'Convertir segundos',enunc:'Leer segundos totales. Convertir a horas, minutos y segundos.',code:'Algoritmo ConvSegundos\n   Definir tot, h, m, s Como Entero\n   Escribir "Segundos:" : Leer tot\n   h <- trunc(tot/3600)\n   m <- trunc((tot-h*3600)/60)\n   s <- tot - h*3600 - m*60\n   Escribir h,"h ",m,"min ",s,"seg"\nFinAlgoritmo'},
+  {n:9,t:'Secuencial',s:4,title:'Índice de Masa Corporal',enunc:'Leer peso (kg) y talla (m). Calcular IMC = Peso/Talla²',code:'Algoritmo IMC\n   Definir p, t, imc Como Real\n   Escribir "Peso (kg):" : Leer p\n   Escribir "Talla (m):" : Leer t\n   imc <- p / (t^2)\n   Escribir "IMC: ", imc\nFinAlgoritmo'},
+  {n:10,t:'Secuencial',s:4,title:'Cambio en tienda',enunc:'Leer precio y dinero entregado. Calcular el cambio.',code:'Algoritmo Cambio\n   Definir p, d, c Como Real\n   Escribir "Precio:" : Leer p\n   Escribir "Entregado:" : Leer d\n   c <- d - p\n   Escribir "Cambio: $", c\nFinAlgoritmo'},
+  {n:11,t:'Condicional',s:5,title:'Positivo, negativo o cero',enunc:'Leer un número. Determinar si es positivo, negativo o cero.',code:'Algoritmo ClasNum\n   Definir n Como Real\n   Escribir "Número:" : Leer n\n   Si n>0 Entonces\n      Escribir "POSITIVO"\n   SiNo\n      Si n<0 Entonces\n         Escribir "NEGATIVO"\n      SiNo\n         Escribir "CERO"\n      FinSi\n   FinSi\nFinAlgoritmo'},
+  {n:12,t:'Condicional',s:5,title:'Mayor de edad',enunc:'Leer la edad. Indicar si puede votar (≥ 18 años).',code:'Algoritmo MayorEdad\n   Definir e Como Entero\n   Escribir "Edad:" : Leer e\n   Si e >= 18 Entonces\n      Escribir "Puede votar."\n   SiNo\n      Escribir "No puede. Faltan ",18-e," años."\n   FinSi\nFinAlgoritmo'},
+  {n:13,t:'Condicional',s:5,title:'Descuento por precio',enunc:'>100000=20% descuento, 50000-100000=10%, <50000=sin descuento.',code:'Algoritmo Descuento\n   Definir p, d, f Como Real\n   Escribir "Precio:" : Leer p\n   Si p>100000 Entonces d <- p*0.20\n   SiNo Si p>=50000 Entonces d <- p*0.10\n   SiNo d <- 0 FinSi FinSi\n   f <- p - d\n   Escribir "Final: $", f\nFinAlgoritmo'},
+  {n:14,t:'Condicional',s:5,title:'Calificación en letras',enunc:'≥4.5=Excelente, ≥4.0=Sobresaliente, ≥3.5=Bueno, ≥3.0=Aceptable, <3.0=Insuficiente.',code:'Algoritmo CalifLetras\n   Definir n Como Real\n   Escribir "Nota:" : Leer n\n   Si n>=4.5 Entonces Escribir "EXCELENTE"\n   SiNo Si n>=4.0 Entonces Escribir "SOBRESALIENTE"\n   SiNo Si n>=3.5 Entonces Escribir "BUENO"\n   SiNo Si n>=3.0 Entonces Escribir "ACEPTABLE"\n   SiNo Escribir "INSUFICIENTE"\n   FinSi FinSi FinSi FinSi\nFinAlgoritmo'},
+  {n:15,t:'Condicional',s:5,title:'Par o impar',enunc:'Leer un entero. Determinar si es par o impar usando MOD.',code:'Algoritmo ParImpar\n   Definir n Como Entero\n   Escribir "Entero:" : Leer n\n   Si n MOD 2 = 0 Entonces\n      Escribir n, " es PAR"\n   SiNo\n      Escribir n, " es IMPAR"\n   FinSi\nFinAlgoritmo'},
+  {n:16,t:'Condicional',s:5,title:'Año bisiesto',enunc:'Leer un año. Determinar si es bisiesto (÷4 excepto centenarios que no son ÷400).',code:'Algoritmo Bisiesto\n   Definir a Como Entero\n   Escribir "Año:" : Leer a\n   Si (a MOD 4=0 Y a MOD 100<>0) O\n      (a MOD 400=0) Entonces\n      Escribir a, " ES bisiesto"\n   SiNo\n      Escribir a, " NO es bisiesto"\n   FinSi\nFinAlgoritmo'},
+  {n:17,t:'Condicional',s:5,title:'Clasificar triángulo',enunc:'Leer tres lados. Clasificar: Equilátero, Isósceles o Escaleno.',code:'Algoritmo Triangulo\n   Definir a,b,c Como Real\n   Leer a : Leer b : Leer c\n   Si a=b Y b=c Entonces\n      Escribir "EQUILATERO"\n   SiNo Si a=b O b=c O a=c Entonces\n      Escribir "ISOSCELES"\n   SiNo\n      Escribir "ESCALENO"\n   FinSi FinSi\nFinAlgoritmo'},
+  {n:18,t:'Condicional',s:6,title:'Calculadora básica (Segun)',enunc:'Leer dos números y operación (+,-,*,/). Usar Segun Hacer.',code:'Algoritmo Calculadora\n   Definir a,b,r Como Real\n   Definir op Como Caracter\n   Leer a : Leer op : Leer b\n   Segun op Hacer\n      \'+\': r <- a+b\n      \'-\': r <- a-b\n      \'*\': r <- a*b\n      \'/\': Si b<>0 Entonces r<-a/b\n             SiNo Escribir "Error /0" FinSi\n      De Otro Modo: Escribir "Invalido"\n   FinSegun\n   Escribir a," ",op," ",b," = ",r\nFinAlgoritmo'},
+  {n:19,t:'Condicional',s:6,title:'Mayor de tres números',enunc:'Leer tres números. Determinar el mayor.',code:'Algoritmo MayorTres\n   Definir a,b,c,m Como Real\n   Leer a : Leer b : Leer c\n   Si a>=b Y a>=c Entonces m<-a\n   SiNo Si b>=a Y b>=c Entonces m<-b\n   SiNo m<-c FinSi FinSi\n   Escribir "Mayor: ", m\nFinAlgoritmo'},
+  {n:20,t:'Condicional',s:6,title:'Costo de llamada telefónica',enunc:'≤5 min=$200/min, 5-15=$150/min, >15=$100/min.',code:'Algoritmo CostoLlamada\n   Definir m,c Como Real\n   Escribir "Minutos:" : Leer m\n   Si m<=5 Entonces c<-m*200\n   SiNo Si m<=15 Entonces\n      c <- 5*200+(m-5)*150\n   SiNo\n      c <- 5*200+10*150+(m-15)*100\n   FinSi FinSi\n   Escribir "Costo: $", c\nFinAlgoritmo'},
+  {n:21,t:'Bucle',s:7,title:'Suma de naturales 1..N',enunc:'Leer N. Calcular la suma de todos los naturales de 1 a N.',code:'Algoritmo SumaNat\n   Definir n,i,s Como Entero\n   Escribir "N:" : Leer n\n   s <- 0\n   Para i <- 1 Hasta n Con Paso 1 Hacer\n      s <- s + i\n   FinPara\n   Escribir "Suma 1..",n," = ",s\nFinAlgoritmo'},
+  {n:22,t:'Bucle',s:7,title:'Tabla de multiplicar',enunc:'Leer un número. Mostrar su tabla del 1 al 10.',code:'Algoritmo Tabla\n   Definir n,i Como Entero\n   Escribir "Número:" : Leer n\n   Para i <- 1 Hasta 10 Con Paso 1 Hacer\n      Escribir n," × ",i," = ",n*i\n   FinPara\nFinAlgoritmo'},
+  {n:23,t:'Bucle',s:7,title:'Factorial de un número',enunc:'Leer N ≥ 0. Calcular N!',code:'Algoritmo Factorial\n   Definir n,i,f Como Entero\n   Escribir "N:" : Leer n\n   f <- 1\n   Para i <- 1 Hasta n Con Paso 1 Hacer\n      f <- f * i\n   FinPara\n   Escribir n,"! = ",f\nFinAlgoritmo'},
+  {n:24,t:'Bucle',s:7,title:'Serie de Fibonacci',enunc:'Leer N. Mostrar los primeros N términos de Fibonacci (0,1,1,2,3,5...)',code:'Algoritmo Fibonacci\n   Definir n,i,a,b,c Como Entero\n   Escribir "N términos:" : Leer n\n   a<-0 : b<-1\n   Para i <- 1 Hasta n Con Paso 1 Hacer\n      Escribir a\n      c<-a+b : a<-b : b<-c\n   FinPara\nFinAlgoritmo'},
+  {n:25,t:'Bucle',s:7,title:'Mayor en una serie',enunc:'Leer 10 números. Mostrar el mayor.',code:'Algoritmo MayorSerie\n   Definir i,n,m Como Real\n   m <- -999999\n   Para i <- 1 Hasta 10 Con Paso 1 Hacer\n      Escribir "Nº ",i,":" : Leer n\n      Si n>m Entonces m<-n FinSi\n   FinPara\n   Escribir "Mayor: ", m\nFinAlgoritmo'},
+  {n:26,t:'Bucle',s:7,title:'Contar pares e impares',enunc:'Leer N números. Contar cuántos son pares y cuántos impares.',code:'Algoritmo PaIm\n   Definir n,i,num,p,im Como Entero\n   Escribir "N:" : Leer n\n   p<-0 : im<-0\n   Para i <- 1 Hasta n Con Paso 1 Hacer\n      Leer num\n      Si num MOD 2=0 Entonces p<-p+1\n      SiNo im<-im+1 FinSi\n   FinPara\n   Escribir "Pares:",p," Impares:",im\nFinAlgoritmo'},
+  {n:27,t:'Bucle',s:8,title:'Múltiplos en un rango',enunc:'Leer base y límite. Mostrar todos los múltiplos de base hasta el límite.',code:'Algoritmo Multiplos\n   Definir b,lim,i Como Entero\n   Escribir "Base:" : Leer b\n   Escribir "Límite:" : Leer lim\n   Para i <- b Hasta lim Con Paso b Hacer\n      Escribir i\n   FinPara\nFinAlgoritmo'},
+  {n:28,t:'Bucle',s:8,title:'Promedio de N calificaciones',enunc:'Leer notas hasta ingresar -1. Calcular el promedio.',code:'Algoritmo PromCalif\n   Definir n,s Como Real\n   Definir cnt Como Entero\n   s<-0 : cnt<-0\n   Leer n\n   Mientras n <> -1 Hacer\n      s<-s+n : cnt<-cnt+1\n      Leer n\n   FinMientras\n   Si cnt>0 Entonces\n      Escribir "Promedio: ",s/cnt\n   FinSi\nFinAlgoritmo'},
+  {n:29,t:'Bucle',s:8,title:'Adivinar número secreto',enunc:'El programa tiene un número fijo. El usuario intenta adivinarlo.',code:'Algoritmo Adivina\n   Definir sec,int,cnt Como Entero\n   sec<-7 : cnt<-0\n   Escribir "Adivina (1-10):" : Leer int\n   Mientras int <> sec Hacer\n      cnt<-cnt+1\n      Si int<sec Entonces Escribir "Es MAYOR"\n      SiNo Escribir "Es MENOR" FinSi\n      Leer int\n   FinMientras\n   Escribir "¡Correcto en ",cnt+1," intentos!"\nFinAlgoritmo'},
+  {n:30,t:'Bucle',s:8,title:'Validar contraseña (3 intentos)',enunc:'Contraseña fija. El usuario tiene 3 intentos. Usar Repetir-Hasta.',code:'Algoritmo ValidaClave\n   Definir clave,int Como Caracter\n   Definir cnt Como Entero\n   clave<-"abc123" : cnt<-0\n   Repetir\n      cnt<-cnt+1\n      Escribir "Clave (intento ",cnt,"):" : Leer int\n      Si int=clave Entonces Escribir "Acceso OK!"\n      SiNo Escribir "Incorrecta." FinSi\n   Hasta Que int=clave O cnt=3\n   Si int<>clave Entonces Escribir "Bloqueado." FinSi\nFinAlgoritmo'},
+  {n:31,t:'Combinado',s:9,title:'Menú de geometría',enunc:'Menú: 1=Cuadrado, 2=Triángulo, 3=Círculo, 4=Salir. Repite hasta salir.',code:'Algoritmo MenuGeo\n   Definir op Como Entero\n   Definir l,b,h,r Como Real\n   Repetir\n      Escribir "1.Cuad 2.Tri 3.Cir 4.Salir" : Leer op\n      Segun op Hacer\n         1: Leer l : Escribir "Área: ",l^2\n         2: Leer b:Leer h : Escribir "Área: ",(b*h)/2\n         3: Leer r : Escribir "Área: ",3.14159*r^2\n         4: Escribir "¡Hasta luego!"\n         De Otro Modo: Escribir "Inválido"\n      FinSegun\n   Hasta Que op=4\nFinAlgoritmo'},
+  {n:32,t:'Combinado',s:9,title:'Sistema de calificaciones',enunc:'Leer N estudiantes (nombre + nota). Mostrar promedio, mayor y menor.',code:'Algoritmo SistCalif\n   Definir n,i Como Entero\n   Definir nom Como Caracter\n   Definir nota,s,may,men Como Real\n   Leer n : s<-0 : may<-0 : men<-5\n   Para i<-1 Hasta n Con Paso 1 Hacer\n      Leer nom : Leer nota\n      s<-s+nota\n      Si nota>may Entonces may<-nota FinSi\n      Si nota<men Entonces men<-nota FinSi\n   FinPara\n   Escribir "Prom:",s/n," May:",may," Men:",men\nFinAlgoritmo'},
+  {n:33,t:'Combinado',s:9,title:'Número primo',enunc:'Leer entero > 1. Determinar si es primo.',code:'Algoritmo EsPrimo\n   Definir n,i,d Como Entero\n   Leer n : d<-0\n   Para i<-1 Hasta n Con Paso 1 Hacer\n      Si n MOD i=0 Entonces d<-d+1 FinSi\n   FinPara\n   Si d=2 Entonces Escribir n," ES primo"\n   SiNo Escribir n," NO es primo" FinSi\nFinAlgoritmo'},
+  {n:34,t:'Combinado',s:9,title:'Ordenar tres números',enunc:'Leer tres números. Mostrarlos de menor a mayor.',code:'Algoritmo Ordenar\n   Definir a,b,c,aux Como Real\n   Leer a:Leer b:Leer c\n   Si a>b Entonces aux<-a:a<-b:b<-aux FinSi\n   Si b>c Entonces aux<-b:b<-c:c<-aux FinSi\n   Si a>b Entonces aux<-a:a<-b:b<-aux FinSi\n   Escribir a," - ",b," - ",c\nFinAlgoritmo'},
+  {n:35,t:'Combinado',s:9,title:'Juego par o impar',enunc:'El usuario y la máquina eligen número. Suman. 5 rondas con marcador.',code:'Algoritmo ParImparJuego\n   Definir r,nU,nM,s,w Como Entero\n   Definir e Como Caracter\n   w<-0\n   Para r<-1 Hasta 5 Con Paso 1 Hacer\n      Escribir "par o impar?":Leer e\n      Escribir "Tu número:":Leer nU\n      nM<-3 : s<-nU+nM\n      Si (s MOD 2=0 Y e="par") O\n         (s MOD 2<>0 Y e="impar") Entonces\n         w<-w+1 : Escribir "¡Ganaste!"\n      SiNo Escribir "Perdiste." FinSi\n   FinPara\n   Escribir "Victorias: ",w,"/5"\nFinAlgoritmo'},
+  {n:36,t:'Combinado',s:9,title:'Cajero automático',enunc:'Saldo inicial $500000. Menú: consultar/retirar/depositar/salir.',code:'Algoritmo Cajero\n   Definir saldo,m Como Real\n   Definir op Como Entero\n   saldo<-500000\n   Repetir\n      Escribir "1.Saldo 2.Ret 3.Dep 4.Salir":Leer op\n      Segun op Hacer\n         1: Escribir "Saldo: $",saldo\n         2: Leer m\n            Si m<=saldo Entonces saldo<-saldo-m\n            SiNo Escribir "Insuficiente." FinSi\n         3: Leer m : saldo<-saldo+m\n         4: Escribir "Adiós!"\n      FinSegun\n   Hasta Que op=4\nFinAlgoritmo'},
+  {n:37,t:'Combinado',s:9,title:'Registro de asistencia',enunc:'Leer N estudiantes (P/A). Mostrar presentes, ausentes y % asistencia.',code:'Algoritmo Asistencia\n   Definir n,i,p,au Como Entero\n   Definir nom,est Como Caracter\n   Leer n : p<-0 : au<-0\n   Para i<-1 Hasta n Con Paso 1 Hacer\n      Leer nom : Leer est\n      Si est="P" O est="p" Entonces p<-p+1\n      SiNo au<-au+1 FinSi\n   FinPara\n   Escribir "P:",p," A:",au," Asist:",(p*100)/n,"%"\nFinAlgoritmo'},
+  {n:38,t:'Combinado',s:10,title:'Calculadora con validación',enunc:'Calculadora que valida división por cero, opera en bucle y cuenta operaciones.',code:'Algoritmo CalcTotal\n   Definir a,b,r Como Real\n   Definir op Como Caracter\n   Definir cnt,sig Como Entero\n   cnt<-0\n   Repetir\n      Leer a:Leer op:Leer b\n      Si op="/" Y b=0 Entonces Escribir "Error /0"\n      SiNo\n         Segun op Hacer\n            \'+\':r<-a+b \'-\':r<-a-b\n            \'*\':r<-a*b \'/\':r<-a/b\n         FinSegun\n         Escribir a," ",op," ",b," = ",r\n         cnt<-cnt+1\n      FinSi\n      Escribir "Continuar? 1=Sí 0=No":Leer sig\n   Hasta Que sig=0\n   Escribir "Total operaciones: ",cnt\nFinAlgoritmo'},
+];
+
+var KWS = ['Algoritmo','FinAlgoritmo','Definir','Como','Entero','Real','Caracter','Logico','Leer','Escribir','Si','SiNo','FinSi','Entonces','Para','FinPara','Hasta','Con','Paso','Hacer','Mientras','FinMientras','Repetir','Segun','FinSegun','De','Otro','Modo','trunc','Y','O','No','MOD'];
+
+function highlight(code) {
+  var r = code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  r = r.replace(/"([^"]*)"/g,'<span class="str">"$1"</span>');
+  r = r.replace(/\/\/.*/g, function(m){return '<span class="cm">'+m+'</span>';});
+  KWS.forEach(function(k){r = r.replace(new RegExp('\\b'+k+'\\b','g'),'<span class="kw">'+k+'</span>');});
+  r = r.replace(/\b(\d+\.?\d*)\b/g,'<span class="nm">$1</span>');
+  return r;
+}
+var TC_CLASS = {Secuencial:'ex-t',Condicional:'ex-c',Bucle:'ex-b',Combinado:'ex-co'};
+var TC_COLOR = {Secuencial:'var(--teal)',Condicional:'var(--purple)',Bucle:'var(--amber)',Combinado:'var(--red)'};
+
+function renderExercises() {
+  var html = '';
+  EX.forEach(function(e) {
+    html += '<div class="ex-card '+TC_CLASS[e.t]+'" data-tipo="'+e.t+'">';
+    html += '<div class="ex-head"><div class="ex-num" style="background:'+TC_COLOR[e.t]+'">'+e.n+'</div>';
+    html += '<div><div class="ex-title">'+e.title+'</div><div class="ex-meta">'+e.t+' · Semana '+e.s+'</div></div></div>';
+    html += '<div class="ex-enunc">'+e.enunc+'</div>';
+    html += '<div class="code-blk"><pre>'+highlight(e.code)+'</pre></div>';
+    html += '</div>';
+  });
+  document.getElementById('ex-grid').innerHTML = html;
+}
+function filterEx(tipo, btn) {
+  document.querySelectorAll('.fb').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.ex-card').forEach(function(c){
+    c.style.display = (tipo==='all' || c.dataset.tipo===tipo) ? 'block' : 'none';
+  });
+}
+
+// ─── IDEVICES ────────────────────────────────────────
+var QD = [
+  {id:'q1',title:'Quiz 1: Fundamentos de Algoritmos',sub:'5 preguntas · Sesiones 1-2',color:'#0d9488',bg:'#e0f9f5',icon:'📝',
+   qs:[
+    {q:'¿Cuál define correctamente un algoritmo?',opts:['Un programa en Python','Una secuencia finita, ordenada y no ambigua de pasos para resolver un problema','Un archivo ejecutable','Un lenguaje de programación'],c:1,fb:'Un algoritmo es precisamente eso: secuencia finita, ordenada y no ambigua. No necesita ser un programa ni un lenguaje.'},
+    {q:'¿Cuál es una característica OBLIGATORIA de todo algoritmo?',opts:['Escrito en lenguaje de programación','Más de 10 pasos','Finito (debe terminar en algún momento)','Ejecutarse en una computadora'],c:2,fb:'La finitud es fundamental: todo algoritmo debe terminar después de un número finito de pasos.'},
+    {q:'¿Qué habilidad del pensamiento computacional divide un problema en partes más pequeñas?',opts:['Abstracción','Reconocimiento de patrones','Descomposición','Diseño de algoritmos'],c:2,fb:'La descomposición divide un problema complejo en subproblemas más manejables.'},
+    {q:'Un algoritmo sin decisiones ni repeticiones se denomina:',opts:['Condicional','Iterativo','Secuencial','Recursivo'],c:2,fb:'La estructura secuencial ejecuta instrucciones en orden lineal, sin bifurcaciones ni repeticiones.'},
+    {q:'¿Cuál ejemplo cotidiano ES un algoritmo?',opts:['Una foto del recreo','Una lista de ingredientes','Las instrucciones paso a paso para preparar un plato','El número de página de un libro'],c:2,fb:'Las instrucciones de la receta son un algoritmo porque son secuencia ordenada de pasos con resultado definido.'},
+  ]},
+  {id:'q2',title:'Quiz 2: Pseudocódigo y PSeInt',sub:'5 preguntas · Sesiones 3-4',color:'#7c3aed',bg:'#ede9fe',icon:'💻',
+   qs:[
+    {q:'En PSeInt, ¿cuál instrucción RECIBE un dato del usuario?',opts:['Escribir','Mostrar','Leer','Obtener'],c:2,fb:'Leer es la instrucción de entrada. Captura el dato que el usuario escribe en consola.'},
+    {q:'¿Cómo se declara CORRECTAMENTE una variable real llamada precio?',opts:['precio: Real','float precio','Definir precio Como Real','var precio = Real'],c:2,fb:'En PSeInt la sintaxis es: Definir [nombre] Como [Tipo]. La más cercana al español natural.'},
+    {q:'¿Cuál es el operador de ASIGNACIÓN en PSeInt?',opts:['=','==','<-','=>'],c:2,fb:'El operador <- asigna un valor a una variable: edad <- 18'},
+    {q:'¿Qué operador calcula el RESIDUO de una división en PSeInt?',opts:['%','mod','MOD','//'],c:2,fb:'PSeInt usa MOD en mayúsculas. Ejemplo: 10 MOD 3 = 1.'},
+    {q:'¿Cuál es la SALIDA de: x <- 4  |  y <- x * 2 + 1  |  Escribir y ?',opts:['4','8','9','10'],c:2,fb:'Primero 4×2=8, luego 8+1=9. Se aplica la precedencia: multiplicación antes que suma.'},
+  ]},
+  {id:'q3',title:'Quiz 3: Estructuras de Control',sub:'5 preguntas · Sesiones 5-8',color:'#d97706',bg:'#fef3c7',icon:'🔁',
+   qs:[
+    {q:'¿Cuántas veces ejecuta: Para i <- 1 Hasta 5 Con Paso 1 Hacer?',opts:['4 veces','5 veces','6 veces','Infinitas veces'],c:1,fb:'El bucle va de i=1 a i=5 inclusive: 5 iteraciones (1,2,3,4,5).'},
+    {q:'Diferencia principal entre Mientras y Repetir-Hasta:',opts:['No hay diferencia','Mientras verifica la condición AL INICIO; Repetir-Hasta AL FINAL','Repetir-Hasta es más rápido','Mientras es para números'],c:1,fb:'Mientras puede no ejecutarse nunca. Repetir-Hasta siempre ejecuta al menos una vez.'},
+    {q:'¿Qué es un bucle infinito?',opts:['Bucle que ejecuta 1000 veces','Bucle cuya condición de parada nunca se cumple','Bucle Para con paso grande','Un error de sintaxis'],c:1,fb:'Un bucle infinito ocurre cuando la condición de salida nunca se vuelve verdadera.'},
+    {q:'En Si-SiNo, si la condición del Si es VERDADERA:',opts:['Se evalúan todas las condiciones','Solo se ejecuta el bloque Si','Se ignora el SiNo externo','Se produce un error'],c:1,fb:'Si la condición es verdadera, se ejecuta ese bloque y se salta todo el SiNo.'},
+    {q:'¿Para qué sirve el operador MOD en una condicional?',opts:['Para multiplicar','Para verificar divisibilidad (si un número divide exactamente a otro)','Para comparar cadenas','Para redondear'],c:1,fb:'MOD calcula el residuo. Si num MOD 2 = 0, el número es par. Fundamental para divisibilidad.'},
+  ]},
+];
+
+var qStates = {};
+
+function renderIDevices() {
+  var html = '';
+  QD.forEach(function(quiz) {
+    qStates[quiz.id] = {answers:[], done:false};
+    html += '<div class="idev-card">';
+    html += '<div class="idev-hdr" style="background:'+quiz.bg+'">';
+    html += '<div class="idev-icon" style="background:'+quiz.color+';color:#fff">'+quiz.icon+'</div>';
+    html += '<div><div class="idev-ttl">'+quiz.title+'</div><div class="idev-sub">'+quiz.sub+'</div></div></div>';
+    html += '<div class="idev-body" id="'+quiz.id+'-body">';
+    quiz.qs.forEach(function(q, qi) {
+      html += '<div class="quiz-q" id="'+quiz.id+'-q'+qi+'">';
+      html += '<div class="quiz-qtxt">'+(qi+1)+'. '+q.q+'</div>';
+      html += '<div class="quiz-opts">';
+      q.opts.forEach(function(o, oi) {
+        html += '<button class="qopt" onclick="ansQ(\''+quiz.id+'\','+qi+','+oi+')">'+String.fromCharCode(65+oi)+') '+o+'</button>';
+      });
+      html += '</div><div class="qfb" id="'+quiz.id+'-fb'+qi+'"></div></div>';
+    });
+    html += '<div class="quiz-score" id="'+quiz.id+'-score"></div>';
+    html += '<div class="qactions"><button class="btn btn-s" onclick="resetQ(\''+quiz.id+'\')">🔄 Reiniciar</button></div>';
+    html += '</div></div>';
+  });
+
+  // MATCHING
+  html += renderMatchingHtml();
+  // CLOZE
+  html += renderClozeHtml();
+  // ORDERING
+  html += renderOrderingHtml();
+  // MEMORY
+  html += '<div class="idev-card"><div class="idev-hdr" style="background:#ecfdf5">';
+  html += '<div class="idev-icon" style="background:#059669;color:#fff">🃏</div>';
+  html += '<div><div class="idev-ttl">Juego de Memoria (Parejas)</div><div class="idev-sub">8 pares · Estructuras y símbolos · Sesiones 3-8</div></div></div>';
+  html += '<div class="idev-body"><div class="mem-stats"><span class="memory-stat">🎯 Pares: <span id="mem-matched">0/8</span></span><span class="memory-stat" style="margin-left:12px">🔄 Movimientos: <span id="mem-moves">0</span></span></div>';
+  html += '<div class="mem-grid" id="mem-grid"></div>';
+  html += '<div class="qactions"><button class="btn btn-s" onclick="initMemory()">🔄 Nueva partida</button></div></div></div>';
+  // CROSSWORD
+  html += renderCrosswordHtml();
+
+  document.getElementById('idev-container').innerHTML = html;
+  initMemory();
+  setTimeout(function(){initOrdering();}, 100);
+}
+
+// QUIZ LOGIC
+function ansQ(qid, qi, oi) {
+  var state = qStates[qid];
+  if(state.answers[qi] !== undefined) return;
+  var quiz = QD.filter(function(q){return q.id===qid;})[0];
+  var q = quiz.qs[qi];
+  state.answers[qi] = oi;
+  var qEl = document.getElementById(qid+'-q'+qi);
+  qEl.querySelectorAll('.qopt').forEach(function(o,j){
+    o.disabled = true;
+    if(j===q.c) o.classList.add('ok');
+    else if(j===oi) o.classList.add('ko');
+  });
+  var fb = document.getElementById(qid+'-fb'+qi);
+  fb.textContent = (oi===q.c?'✅ ':'❌ ') + q.fb;
+  fb.className = 'qfb show ' + (oi===q.c?'fbok':'fbko');
+  var answered = state.answers.filter(function(a){return a!==undefined;}).length;
+  if(answered === quiz.qs.length) {
+    var score = state.answers.filter(function(a,i){return a===quiz.qs[i].c;}).length;
+    var sc = document.getElementById(qid+'-score');
+    sc.textContent = 'Resultado: '+score+'/'+quiz.qs.length+' '+(score===quiz.qs.length?'🏆 ¡Perfecto!':score>=3?'👍 ¡Muy bien!':'💪 Sigue practicando');
+    sc.className = 'quiz-score show';
+  }
+}
+function resetQ(qid) {
+  var quiz = QD.filter(function(q){return q.id===qid;})[0];
+  qStates[qid] = {answers:[], done:false};
+  document.getElementById(qid+'-score').className = 'quiz-score';
+  quiz.qs.forEach(function(_,i){
+    var qEl = document.getElementById(qid+'-q'+i);
+    qEl.querySelectorAll('.qopt').forEach(function(o){o.disabled=false;o.className='qopt';});
+    document.getElementById(qid+'-fb'+i).className='qfb';
+  });
+}
+
+// MATCHING
+var MATCH_TERMS = ['Variable','Algoritmo','Si-SiNo','Para','Mientras','Repetir-Hasta','Pseudocódigo','Depuración'];
+var MATCH_DEFS  = ['Espacio en memoria que almacena un valor cambiable','Secuencia finita y ordenada de pasos para resolver un problema','Estructura condicional compuesta que bifurca el flujo','Bucle controlado por variable con repeticiones conocidas','Bucle que verifica la condición al inicio de cada iteración','Bucle que ejecuta al menos una vez antes de verificar','Descripción del algoritmo en lenguaje natural estructurado','Proceso de identificar y corregir errores en un algoritmo'];
+var mState = {selT:null, selD:null, matched:new Set(), shuffDefs:[]};
+
+function renderMatchingHtml() {
+  return '<div class="idev-card"><div class="idev-hdr" style="background:#e0f2fe"><div class="idev-icon" style="background:#0284c7;color:#fff">🔗</div><div><div class="idev-ttl">Actividad de Relacionar (Matching)</div><div class="idev-sub">8 pares · Une términos con sus definiciones · Sesiones 1-6</div></div></div><div class="idev-body" id="match-body"></div></div>';
+}
+function initMatching() {
+  var shuf = MATCH_TERMS.map(function(_,i){return i;}).sort(function(){return Math.random()-.5;});
+  mState = {selT:null, selD:null, matched:new Set(), shuffDefs:shuf};
+  var h = '<div class="match-grid"><div><div class="match-col-lbl">Términos</div>';
+  MATCH_TERMS.forEach(function(t,i){h+='<div class="match-item" id="mt'+i+'" onclick="selMatch(\'t\','+i+')">'+t+'</div>';});
+  h += '</div><div><div class="match-col-lbl">Definiciones</div>';
+  shuf.forEach(function(idx,pos){h+='<div class="match-item" id="md'+pos+'" onclick="selMatch(\'d\','+pos+')">'+MATCH_DEFS[idx]+'</div>';});
+  h += '</div></div><div class="match-fb" id="match-fb"></div>';
+  h += '<div class="qactions"><button class="btn btn-s" onclick="initMatching()">🔄 Reiniciar</button></div>';
+  var body = document.getElementById('match-body');
+  if(body) body.innerHTML = h;
+}
+function selMatch(type, idx) {
+  if(type==='t') {
+    if(mState.matched.has('t'+idx)) return;
+    document.querySelectorAll('.match-item').forEach(function(el){el.classList.remove('sel');});
+    mState.selT = idx;
+    document.getElementById('mt'+idx).classList.add('sel');
+  } else {
+    if(mState.matched.has('d'+idx)) return;
+    mState.selD = idx;
+    document.querySelectorAll('[id^="md"]').forEach(function(el){el.classList.remove('sel');});
+    document.getElementById('md'+idx).classList.add('sel');
+  }
+  if(mState.selT!==null && mState.selD!==null) {
+    var ti = mState.selT, dp = mState.selD;
+    var didx = mState.shuffDefs[dp];
+    var ok = ti === didx;
+    var te = document.getElementById('mt'+ti), de = document.getElementById('md'+dp);
+    te.classList.remove('sel'); de.classList.remove('sel');
+    if(ok) {
+      te.classList.add('mok'); de.classList.add('mok');
+      mState.matched.add('t'+ti); mState.matched.add('d'+dp);
+      document.getElementById('match-fb').innerHTML = '<span style="color:var(--green)">✅ ¡Correcto! "'+MATCH_TERMS[ti]+'" ↔ "'+MATCH_DEFS[ti]+'"</span>';
+      if(mState.matched.size === MATCH_TERMS.length*2) {
+        document.getElementById('match-fb').innerHTML = '<span style="color:var(--green)">🏆 ¡Emparejaste todo correctamente!</span>';
+      }
+    } else {
+      te.classList.add('mko'); de.classList.add('mko');
+      document.getElementById('match-fb').innerHTML = '<span style="color:var(--red)">❌ Incorrecto. Intenta de nuevo.</span>';
+      setTimeout(function(){te.classList.remove('mko');de.classList.remove('mko');},700);
+    }
+    mState.selT = null; mState.selD = null;
+  }
+}
+
+// CLOZE
+var CLOZE = [
+  {lbl:'Completar bucle Para:',frags:['___ i <- 1 Hasta n Con Paso 1 ___','   suma <- suma ___ i','___ FinPara'],ans:['Para','Hacer','+','FinPara'],hint:'Estructura: Para variable ← inicio Hasta fin Con Paso p Hacer'},
+  {lbl:'Completar condicional de mayoría de edad:',frags:['Si ___ >= ___ Entonces','   Escribir "Mayor de edad"','___','   Escribir "Menor de edad"','FinSi'],ans:['edad','18','SiNo'],hint:'La edad mínima para votar es 18'},
+  {lbl:'Completar bucle Mientras:',frags:['___ nota <> -1 ___','   suma <- suma + nota','   ___ nota','FinMientras'],ans:['Mientras','Hacer','Leer'],hint:'El bucle continúa mientras la nota sea diferente de -1'},
+  {lbl:'Completar declaración de variable:',frags:['___ contador, suma ___ Entero'],ans:['Definir','Como'],hint:'Sintaxis PSeInt: Definir nombre Como Tipo'},
+];
+var clozeAnswers = {};
+
+function renderClozeHtml() {
+  return '<div class="idev-card"><div class="idev-hdr" style="background:#f5f3ff"><div class="idev-icon" style="background:#7c3aed;color:#fff">✏️</div><div><div class="idev-ttl">Completar el Código (Cloze)</div><div class="idev-sub">4 fragmentos PSeInt con blancos · Sesiones 4-8</div></div></div><div class="idev-body" id="cloze-body"></div></div>';
+}
+function initCloze() {
+  var h = '';
+  CLOZE.forEach(function(item, ci) {
+    h += '<div class="cloze-blk"><div class="cloze-lbl">Ejercicio '+(ci+1)+': '+item.lbl+'</div>';
+    h += '<div class="cloze-code">';
+    var ai = 0;
+    item.frags.forEach(function(line) {
+      var lineHtml = line.replace(/___/g, function() {
+        var bi = ai++;
+        return '<input class="cinput" id="ci'+ci+'b'+bi+'" placeholder="..." maxlength="12" oninput="checkClozeInput('+ci+','+bi+')" autocomplete="off">';
+      });
+      h += lineHtml + '<br>';
+    });
+    h += '</div><div style="font-size:.75rem;color:var(--muted);margin-top:6px">💡 Pista: '+item.hint+'</div></div>';
+  });
+  h += '<div class="qactions">';
+  h += '<button class="btn btn-t" onclick="checkAllCloze()">✅ Verificar todo</button>';
+  h += '<button class="btn btn-s" onclick="resetCloze()">🔄 Reiniciar</button></div>';
+  h += '<div id="cloze-result" style="margin-top:10px;text-align:center;font-weight:700"></div>';
+  var body = document.getElementById('cloze-body');
+  if(body) body.innerHTML = h;
+}
+function checkClozeInput(ci, bi) {
+  var inp = document.getElementById('ci'+ci+'b'+bi);
+  var ans = CLOZE[ci].ans[bi];
+  inp.classList.remove('cok','cko');
+  if(inp.value.trim() === '') return;
+  if(inp.value.trim().toLowerCase() === ans.toLowerCase()) inp.classList.add('cok');
+}
+function checkAllCloze() {
+  var total=0, correct=0;
+  CLOZE.forEach(function(item,ci) {
+    item.ans.forEach(function(ans,bi) {
+      total++;
+      var inp = document.getElementById('ci'+ci+'b'+bi);
+      if(!inp) return;
+      inp.classList.remove('cok','cko');
+      if(inp.value.trim().toLowerCase() === ans.toLowerCase()) {correct++;inp.classList.add('cok');}
+      else inp.classList.add('cko');
+    });
+  });
+  var res = document.getElementById('cloze-result');
+  res.textContent = 'Resultado: '+correct+'/'+total+' correctas '+(correct===total?'🏆 ¡Perfecto!':correct>total/2?'👍':'💪 Sigue practicando');
+  res.style.color = correct===total?'var(--green)':correct>total/2?'var(--amber)':'var(--red)';
+}
+function resetCloze() {
+  CLOZE.forEach(function(item,ci){item.ans.forEach(function(_,bi){var inp=document.getElementById('ci'+ci+'b'+bi);if(inp){inp.value='';inp.className='cinput';}});});
+  var res=document.getElementById('cloze-result');if(res)res.textContent='';
+}
+
+// ORDERING
+var ORD_STEPS_ORIG = [
+  {id:0,txt:'Inicio del algoritmo. Declarar variables nota1, nota2, nota3, promedio.'},
+  {id:1,txt:'Leer nota1'},
+  {id:2,txt:'Leer nota2. Leer nota3.'},
+  {id:3,txt:'Calcular promedio = (nota1 + nota2 + nota3) / 3'},
+  {id:4,txt:'Escribir el resultado del promedio'},
+  {id:5,txt:'Fin del algoritmo'},
+];
+var ordOrder = [];
+var dragSrc = null;
+
+function renderOrderingHtml() {
+  return '<div class="idev-card"><div class="idev-hdr" style="background:#fff7ed"><div class="idev-icon" style="background:#ea580c;color:#fff">↕️</div><div><div class="idev-ttl">Ordenar los Pasos (Ordering)</div><div class="idev-sub">Algoritmo del promedio · Arrastra o usa ↑↓ · Sesiones 2-5</div></div></div><div class="idev-body"><p style="font-size:.85rem;color:var(--muted);margin-bottom:10px">Ordena los pasos del algoritmo para calcular el promedio de 3 notas:</p><div class="ord-list" id="ord-list"></div><div class="qactions"><button class="btn btn-t" onclick="checkOrdering()">✅ Verificar</button><button class="btn btn-s" onclick="initOrdering()">🔄 Barajar</button></div><div id="ord-result" style="margin-top:10px;text-align:center;font-weight:700"></div></div></div>';
+}
+function initOrdering() {
+  ordOrder = ORD_STEPS_ORIG.slice().sort(function(){return Math.random()-.5;});
+  renderOrdList();
+  var res = document.getElementById('ord-result');
+  if(res) res.textContent = '';
+}
+function renderOrdList() {
+  var list = document.getElementById('ord-list');
+  if(!list) return;
+  var h = '';
+  ordOrder.forEach(function(s,i) {
+    h += '<div class="ord-item" draggable="true" id="oi'+i+'" ondragstart="ordDS(event,'+i+')" ondragover="ordDO(event)" ondrop="ordDrop(event,'+i+')">';
+    h += '<div class="ord-num">'+(i+1)+'</div><span style="flex:1">'+s.txt+'</span>';
+    h += '<div class="ord-arrows"><button onclick="ordMv('+i+',-1)">↑</button><button onclick="ordMv('+i+',1)">↓</button></div></div>';
+  });
+  list.innerHTML = h;
+}
+function ordDS(e,i){dragSrc=i;}
+function ordDO(e){e.preventDefault();}
+function ordDrop(e,i){e.preventDefault();if(dragSrc===i)return;var tmp=ordOrder[dragSrc];ordOrder[dragSrc]=ordOrder[i];ordOrder[i]=tmp;renderOrdList();}
+function ordMv(i,dir){var ni=i+dir;if(ni<0||ni>=ordOrder.length)return;var tmp=ordOrder[i];ordOrder[i]=ordOrder[ni];ordOrder[ni]=tmp;renderOrdList();var r=document.getElementById('ord-result');if(r)r.textContent='';}
+function checkOrdering(){
+  var correct=0;
+  ordOrder.forEach(function(s,i){
+    var el=document.getElementById('oi'+i);
+    el.classList.remove('iok','iko');
+    if(s.id===i){correct++;el.classList.add('iok');}else{el.classList.add('iko');}
+    el.querySelector('.ord-num').textContent=i+1;
+  });
+  var res=document.getElementById('ord-result');
+  res.textContent='Resultado: '+correct+'/'+ORD_STEPS_ORIG.length+' correctos '+(correct===ORD_STEPS_ORIG.length?'🏆 ¡Perfecto!':correct>=4?'👍 ¡Casi!':'💪 Inténtalo de nuevo');
+  res.style.color=correct===ORD_STEPS_ORIG.length?'var(--green)':correct>=4?'var(--amber)':'var(--red)';
+}
+
+// MEMORY
+var MEM_PAIRS=[
+  {a:'Para … FinPara',b:'Bucle controlado'},
+  {a:'Si … SiNo … FinSi',b:'Condicional compuesto'},
+  {a:'Definir x Como Entero',b:'Declarar variable entera'},
+  {a:'◇ Diamante',b:'Símbolo de decisión'},
+  {a:'□ Rectángulo',b:'Símbolo de proceso'},
+  {a:'Mientras … FinMientras',b:'Bucle, condición al inicio'},
+  {a:'Repetir … Hasta Que',b:'Ejecuta al menos una vez'},
+  {a:'○ Óvalo',b:'Inicio o Fin del algoritmo'},
+];
+var memCards=[], memFlipped=[], memMatchedCount=0, memLocked=false, memMoves=0;
+function initMemory(){
+  memCards = [];
+  MEM_PAIRS.forEach(function(p,i){
+    memCards.push({id:i*2,pair:i,txt:p.a,flipped:false,matched:false});
+    memCards.push({id:i*2+1,pair:i,txt:p.b,flipped:false,matched:false});
+  });
+  memCards.sort(function(){return Math.random()-.5;});
+  memFlipped=[]; memMatchedCount=0; memLocked=false; memMoves=0;
+  renderMemory();
+}
+function renderMemory(){
+  var mc=document.getElementById('mem-matched'), mm=document.getElementById('mem-moves');
+  if(mc) mc.textContent=memMatchedCount+'/'+MEM_PAIRS.length;
+  if(mm) mm.textContent=memMoves;
+  var grid=document.getElementById('mem-grid');
+  if(!grid) return;
+  var h='';
+  memCards.forEach(function(c,i){
+    var cls='mem-card'+(c.flipped||c.matched?' flipped':'')+(c.matched?' matched':'');
+    h+='<div class="'+cls+'" onclick="flipCard('+i+')">';
+    h+='<div class="mem-inner"><div class="mem-front">🧩</div>';
+    h+='<div class="mem-back">'+c.txt+'</div></div></div>';
+  });
+  grid.innerHTML=h;
+}
+function flipCard(i){
+  if(memLocked||memCards[i].flipped||memCards[i].matched) return;
+  memCards[i].flipped=true;
+  memFlipped.push(i);
+  renderMemory();
+  if(memFlipped.length===2){
+    memMoves++;
+    memLocked=true;
+    var a=memFlipped[0], b=memFlipped[1];
+    if(memCards[a].pair===memCards[b].pair){
+      memCards[a].matched=memCards[b].matched=true;
+      memMatchedCount++;
+      memFlipped=[]; memLocked=false;
+      renderMemory();
+      if(memMatchedCount===MEM_PAIRS.length) setTimeout(function(){alert('🏆 ¡Perfecto! Completaste el juego en '+memMoves+' movimientos.');},200);
+    } else {
+      setTimeout(function(){memCards[a].flipped=memCards[b].flipped=false;memFlipped=[];memLocked=false;renderMemory();},900);
+    }
+  }
+}
+
+// CROSSWORD
+var CROSS=[
+  {word:'MIENTRAS',dir:'H',row:0,col:0,num:1,clue:'Repite código mientras condición sea verdadera'},
+  {word:'PSEINT',dir:'H',row:2,col:0,num:2,clue:'Herramienta de pseudocódigo en español'},
+  {word:'DEPURACION',dir:'H',row:4,col:0,num:3,clue:'Proceso de encontrar y corregir errores'},
+  {word:'LEER',dir:'H',row:6,col:0,num:4,clue:'Instrucción de entrada de datos en PSeInt'},
+  {word:'VARIABLE',dir:'V',row:0,col:8,num:5,clue:'Espacio en memoria para guardar un dato'},
+  {word:'CONTADOR',dir:'V',row:0,col:5,num:6,clue:'Variable que se incrementa en 1 cada iteración'},
+];
+function renderCrosswordHtml(){return '<div class="idev-card"><div class="idev-hdr" style="background:#fdf4ff"><div class="idev-icon" style="background:#c026d3;color:#fff">🔤</div><div><div class="idev-ttl">Crucigrama de Algoritmos</div><div class="idev-sub">6 palabras clave · Cierre de la unidad</div></div></div><div class="idev-body" id="cross-body"></div></div>';}
+function initCrossword(){
+  var ROWS=10,COLS=12;
+  var grid=Array.from({length:ROWS},function(){return Array(COLS).fill(null);});
+  CROSS.forEach(function(w){
+    for(var k=0;k<w.word.length;k++){
+      var r=w.dir==='H'?w.row:w.row+k;
+      var c=w.dir==='H'?w.col+k:w.col;
+      if(!grid[r][c]) grid[r][c]={letter:w.word[k],num:null};
+      if(k===0) grid[r][c].num=w.num;
+    }
+  });
+  var maxC=0,maxR=0;
+  for(var r=0;r<ROWS;r++) for(var c=0;c<COLS;c++) if(grid[r][c]){if(c>maxC)maxC=c;if(r>maxR)maxR=r;}
+  maxC++;maxR++;
+  var h='<div class="cross-wrap"><div class="cross-grid" style="grid-template-columns:repeat('+maxC+',30px)">';
+  for(var r=0;r<maxR;r++){
+    for(var c=0;c<maxC;c++){
+      var cell=grid[r][c];
+      if(!cell){h+='<div class="cross-cell cross-black"></div>';}
+      else{
+        h+='<div class="cross-cell">';
+        if(cell.num) h+='<div class="cross-num">'+cell.num+'</div>';
+        h+='<input id="cx'+r+'_'+c+'" maxlength="1" oninput="chkCross('+r+','+c+',\''+cell.letter+'\')" style="width:100%;height:100%;border:none;background:transparent;text-align:center;font-family:monospace;font-size:.88rem;font-weight:700;text-transform:uppercase;color:var(--navy);outline:none"></div>';
+      }
+    }
+  }
+  h+='</div></div>';
+  var hClues=CROSS.filter(function(w){return w.dir==='H';}),vClues=CROSS.filter(function(w){return w.dir==='V';});
+  h+='<div class="cross-clues"><div class="cross-clue-grp"><h4>→ Horizontales</h4>';
+  hClues.forEach(function(w){h+='<div class="cross-clue"><span>'+w.num+'.</span>'+w.clue+'</div>';});
+  h+='</div><div class="cross-clue-grp"><h4>↓ Verticales</h4>';
+  vClues.forEach(function(w){h+='<div class="cross-clue"><span>'+w.num+'.</span>'+w.clue+'</div>';});
+  h+='</div></div>';
+  h+='<div class="qactions"><button class="btn btn-t" onclick="checkAllCross()">✅ Verificar</button><button class="btn btn-s" onclick="initCrossword()">🔄 Limpiar</button></div>';
+  h+='<div id="cross-result" style="margin-top:10px;text-align:center;font-weight:700"></div>';
+  var body=document.getElementById('cross-body');
+  if(body) body.innerHTML=h;
+}
+function chkCross(r,c,letter){
+  var inp=document.getElementById('cx'+r+'_'+c);
+  inp.classList.remove('cright','cwrong');
+  if(inp.value) inp.classList.add(inp.value.toUpperCase()===letter?'cright':'cwrong');
+}
+function checkAllCross(){
+  var tot=0,cor=0;
+  CROSS.forEach(function(w){
+    for(var k=0;k<w.word.length;k++){
+      var r=w.dir==='H'?w.row:w.row+k,c=w.dir==='H'?w.col+k:w.col;
+      var inp=document.getElementById('cx'+r+'_'+c);
+      if(inp){tot++;inp.classList.remove('cright','cwrong');
+        if(inp.value.toUpperCase()===w.word[k]){cor++;inp.classList.add('cright');}
+        else inp.classList.add('cwrong');}
+    }
+  });
+  var res=document.getElementById('cross-result');
+  res.textContent=cor+'/'+tot+' letras correctas '+(cor===tot?'🏆':'💪');
+  res.style.color=cor===tot?'var(--green)':cor>tot*.7?'var(--amber)':'var(--red)';
+}
+
+// ─── PLATAFORMAS ─────────────────────────────────────
+var KQ_ALL=[];
+var KQ1=[
+  {q:'¿Cuál define correctamente un algoritmo?',opts:['Un programa escrito en Python','Una secuencia FINITA, ordenada y no ambigua de pasos para resolver un problema','Un archivo ejecutable','Un lenguaje de programación'],c:1,t:20,quiz:'Q1'},
+  {q:'¿Cuántas características OBLIGATORIAS tiene todo algoritmo?',opts:['3','4','5','6'],c:2,t:20,quiz:'Q1'},
+  {q:'¿Qué habilidad del PC divide el problema en partes más pequeñas?',opts:['Abstracción','Reconocimiento de patrones','Descomposición','Diseño de algoritmos'],c:2,t:20,quiz:'Q1'},
+  {q:'¿Cuál situación cotidiana ES un algoritmo?',opts:['Observar el cielo','Una foto','Los pasos exactos para lavarse las manos','La lista de canciones'],c:2,t:20,quiz:'Q1'},
+  {q:'Un algoritmo sin decisiones ni repeticiones se llama:',opts:['Condicional','Iterativo','Secuencial','Recursivo'],c:2,t:20,quiz:'Q1'},
+  {q:'¿Qué estructura usar cuando NO se sabe cuántas repeticiones?',opts:['Secuencial','Condicional','Iterativa','Ninguna'],c:2,t:25,quiz:'Q1'},
+  {q:'¿Cuál es la PRIMERA etapa de Design Thinking?',opts:['Prototipar','Idear','Empatizar','Testear'],c:2,t:20,quiz:'Q1'},
+  {q:'La ABSTRACCIÓN significa:',opts:['Copiar código','Identificar lo esencial e ignorar detalles innecesarios','Ejecutar paso a paso','Dividir en subproblemas'],c:1,t:25,quiz:'Q1'},
+  {q:'¿Cuál diagrama usa óvalo, rectángulo y diamante?',opts:['Diagrama de clases','Diagrama de flujo','Diagrama de barras','Mapa conceptual'],c:1,t:20,quiz:'Q1'},
+  {q:'Un proceso que NUNCA termina viola la característica de:',opts:['Definición','Entradas','Finitud','Eficacia'],c:2,t:25,quiz:'Q1'},
+];
+var KQ2=[
+  {q:'¿Instrucción en PSeInt que RECIBE un dato del usuario?',opts:['Escribir','Mostrar','Leer','Obtener'],c:2,t:15,quiz:'Q2'},
+  {q:'¿Cómo declarar CORRECTAMENTE: variable real "precio"?',opts:['precio: Real','float precio','Definir precio Como Real','var precio = Real'],c:2,t:20,quiz:'Q2'},
+  {q:'¿Cuál es el operador de ASIGNACIÓN en PSeInt?',opts:['=','==','<-','=>'],c:2,t:15,quiz:'Q2'},
+  {q:'¿Qué operador calcula el RESIDUO de una división?',opts:['%','mod','MOD','//'],c:2,t:20,quiz:'Q2'},
+  {q:'¿Salida de: x<-5 | y<-x*2-3 | Escribir y ?',opts:['7','10','5','3'],c:0,t:30,quiz:'Q2'},
+  {q:'¿Qué tipo de dato guarda un número con decimales?',opts:['Entero','Real','Caracter','Logico'],c:1,t:15,quiz:'Q2'},
+  {q:'¿Cuántos tipos de datos primitivos tiene PSeInt?',opts:['2','3','4','5'],c:2,t:20,quiz:'Q2'},
+  {q:'¿Valor de: resultado <- 7 MOD 2?',opts:['3','3.5','1','0'],c:2,t:25,quiz:'Q2'},
+  {q:'Para x al CUBO en PSeInt se puede escribir:',opts:['Solo x*x*x','x^3','x**3','x^3 o x*x*x (ambas válidas)'],c:3,t:25,quiz:'Q2'},
+  {q:'¿Instrucción correcta para mostrar "Hola Mundo"?',opts:["Print 'Hola Mundo'",'console.log(...)','Escribir "Hola Mundo"','Mostrar Hola Mundo'],c:2,t:15,quiz:'Q2'},
+];
+var KQ3=[
+  {q:'¿Cuántas veces ejecuta: Para i<-1 Hasta 7 Con Paso 1?',opts:['6','7','8','Infinitas'],c:1,t:20,quiz:'Q3'},
+  {q:'Diferencia entre Mientras y Repetir-Hasta:',opts:['No hay diferencia','Mientras verifica al INICIO; Repetir-Hasta al FINAL','Repetir-Hasta es más rápido','Mientras solo para números'],c:1,t:25,quiz:'Q3'},
+  {q:'¿Qué estructura usar cuando SABES exactamente las repeticiones?',opts:['Mientras','Repetir-Hasta','Para','Si-SiNo'],c:2,t:20,quiz:'Q3'},
+  {q:'n=10: Si n MOD 2=0 → Escribir Par SiNo → Escribir Impar',opts:['Impar','Par','0','Error'],c:1,t:25,quiz:'Q3'},
+  {q:'Un bucle INFINITO ocurre cuando:',opts:['Ejecuta 1000 veces','La condición de parada nunca se cumple','El paso es >1','Se usa Repetir en lugar de Mientras'],c:1,t:20,quiz:'Q3'},
+  {q:'¿Equivalente a switch/case en PSeInt?',opts:['Si-SiNo','Para','Segun-Hacer-FinSegun','Seleccionar'],c:2,t:20,quiz:'Q3'},
+  {q:'¿Cuál es el residuo de 15 MOD 4?',opts:['3','4','2','1'],c:3,t:25,quiz:'Q3'},
+  {q:'¿Qué es un ACUMULADOR?',opts:['Variable que siempre vale 1','Variable que almacena el máximo','Variable que suma valores en cada iteración','Nombre de la variable de control'],c:2,t:25,quiz:'Q3'},
+  {q:'¿Qué estructura garantiza ejecución AL MENOS UNA VEZ?',opts:['Para','Mientras','Repetir-Hasta','Si-SiNo'],c:2,t:20,quiz:'Q3'},
+  {q:'¿Qué error ocurre cuando el código compila pero los resultados son INCORRECTOS?',opts:['Error de sintaxis','Error de ejecución','Error de lógica','Error de compilación'],c:2,t:25,quiz:'Q3'},
+];
+var KQ4=[
+  {q:'¿Cuántas iteraciones: Para i<-2 Hasta 10 Con Paso 2?',opts:['4','5','8','10'],c:1,t:30,quiz:'Q4'},
+  {q:'¿Qué imprime: a<-10, b<-3, Escribir a MOD b?',opts:['3','3.33','1','0'],c:2,t:30,quiz:'Q4'},
+  {q:'Ordenar tres números necesita principalmente:',opts:['Solo secuencial','Secuencial + condicionales','Solo un Para','Recursión'],c:1,t:30,quiz:'Q4'},
+  {q:'Para leer notas hasta ingresar -1, la mejor estructura es:',opts:['Para i<-1 Hasta n','Si nota<>-1','Mientras nota<>-1 Hacer','Segun nota Hacer'],c:2,t:25,quiz:'Q4'},
+  {q:'¿Cuántos divisores tiene el número 6?',opts:['2','3','4','6'],c:2,t:30,quiz:'Q4'},
+  {q:'¿Qué símbolo es una DECISIÓN en diagrama de flujo?',opts:['Rectángulo','Óvalo','Paralelogramo','Rombo / diamante'],c:3,t:20,quiz:'Q4'},
+  {q:'¿Qué estructura usa el cajero automático para repetir el menú?',opts:['Para con límite fijo','Mientras con contador','Repetir-Hasta con opción=4','Si-SiNo anidados'],c:2,t:30,quiz:'Q4'},
+  {q:'¿Cuál es el factorial de 5? (5! = 5×4×3×2×1)',opts:['25','100','120','60'],c:2,t:25,quiz:'Q4'},
+  {q:'En DFD nivel 0, ¿qué representa el rectángulo doble?',opts:['Proceso interno','Actor externo (entidad)','Almacén de datos','Flujo de datos'],c:1,t:30,quiz:'Q4'},
+  {q:'¿Primeros 5 términos de Fibonacci?',opts:['0,1,2,3,4','0,1,2,4,8','0,1,1,2,3','0,2,4,6,8'],c:2,t:25,quiz:'Q4'},
+  {q:'Menú con validación (no acepta inválidos) debe usar:',opts:['Si-SiNo simple','Repetir-Hasta con condición válida','Para con límite','Segun sin De Otro Modo'],c:1,t:30,quiz:'Q4'},
+  {q:'¿Ventaja del pseudocódigo sobre el diagrama para algoritmos complejos?',opts:['Siempre más fácil','Más rápido para lógica compleja y más cercano al código real','Los diagramas no representan bucles','Sin errores'],c:1,t:30,quiz:'Q4'},
+];
+KQ_ALL.push.apply(KQ_ALL,KQ1);KQ_ALL.push.apply(KQ_ALL,KQ2);KQ_ALL.push.apply(KQ_ALL,KQ3);KQ_ALL.push.apply(KQ_ALL,KQ4);
+
+var kCurrent=0;
+var KC_COLORS=['#e74c3c','#3498db','#2ecc71','#f1c40f'];
+var KC_SHAPES=['▲','◆','●','■'];
+
+function renderKahootQ(idx){
+  var q=KQ_ALL[idx];
+  var qc={Q1:'#0d9488',Q2:'#7c3aed',Q3:'#d97706',Q4:'#dc2626'}[q.quiz]||'#46178f';
+  var ctr=document.getElementById('kq-counter');
+  if(ctr) ctr.textContent=(idx+1)+'/'+KQ_ALL.length+' ('+q.quiz+')';
+  var h='<div style="background:'+qc+'18;border-radius:9px;padding:16px 18px;margin-bottom:14px;border-left:5px solid '+qc+'">';
+  h+='<div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:'+qc+';margin-bottom:5px">'+q.quiz+' · Pregunta '+(idx+1)+' · ⏱️ '+q.t+' seg</div>';
+  h+='<div style="font-weight:800;font-size:1rem;color:var(--navy);line-height:1.5">'+q.q+'</div></div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">';
+  q.opts.forEach(function(o,i){
+    var ok=i===q.c;
+    h+='<div style="padding:11px 14px;border-radius:7px;border:2px solid '+(ok?'var(--green)':'var(--border)')+';background:'+(ok?'var(--greenL)':'#f8fafc')+';display:flex;align-items:center;gap:9px">';
+    h+='<span style="width:26px;height:26px;border-radius:50%;background:'+KC_COLORS[i]+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:800;flex-shrink:0">'+KC_SHAPES[i]+'</span>';
+    h+='<span style="font-size:.85rem;font-weight:'+(ok?700:400)+';color:'+(ok?'var(--green)':'var(--text)')+'">'+o+(ok?' ✓':'')+'</span></div>';
+  });
+  h+='</div>';
+  var disp=document.getElementById('kq-display');
+  if(disp) disp.innerHTML=h;
+}
+function nextKQ(){kCurrent=(kCurrent+1)%KQ_ALL.length;renderKahootQ(kCurrent);}
+function prevKQ(){kCurrent=(kCurrent-1+KQ_ALL.length)%KQ_ALL.length;renderKahootQ(kCurrent);}
+
+function renderKahootCards(){
+  var info=[
+    {id:'KQ1',data:KQ1,color:'#0d9488',emoji:'🟢',title:'Q1 · Fundamentos de Algoritmos',sub:'10 preguntas · Sesiones 1-2 · 15-20 seg'},
+    {id:'KQ2',data:KQ2,color:'#7c3aed',emoji:'🟣',title:'Q2 · PSeInt Básico',sub:'10 preguntas · Sesiones 3-4 · 15-30 seg'},
+    {id:'KQ3',data:KQ3,color:'#d97706',emoji:'🟡',title:'Q3 · Estructuras de Control',sub:'10 preguntas · Sesiones 5-8 · 20-30 seg'},
+    {id:'KQ4',data:KQ4,color:'#dc2626',emoji:'🔴',title:'Q4 · Repaso Final Integrador',sub:'12 preguntas · Sesiones 9-10 · 25-30 seg'},
+  ];
+  var h='';
+  info.forEach(function(inf){
+    h+='<div class="k-card"><div style="background:'+inf.color+';padding:12px 16px;display:flex;align-items:center;gap:9px">';
+    h+='<span style="font-size:1.4rem">'+inf.emoji+'</span>';
+    h+='<div><div style="color:#fff;font-weight:800;font-size:.9rem">'+inf.title+'</div><div style="color:rgba(255,255,255,.7);font-size:.73rem">'+inf.sub+'</div></div></div>';
+    h+='<div style="padding:12px 14px">';
+    inf.data.slice(0,3).forEach(function(q,i){
+      h+='<div style="font-size:.79rem;color:var(--text);padding:4px 7px;background:#f8fafc;border-radius:5px;border-left:3px solid '+inf.color+';margin-bottom:4px">'+(i+1)+'. '+q.q.substring(0,60)+(q.q.length>60?'...':'')+'</div>';
+    });
+    h+='<div style="font-size:.72rem;color:var(--muted);padding-top:3px">+ '+(inf.data.length-3)+' preguntas más en el archivo Excel</div>';
+    h+='</div></div>';
+  });
+  var cc=document.getElementById('kahoot-cards');
+  if(cc) cc.innerHTML=h;
+}
+
+var MENTI=[
+  {n:1,tipo:'☁️ Word Cloud',c:'#5C5CE0',ses:'Inicio Sesión 1',q:'¿Qué palabra te viene a la mente cuando escuchas la palabra ALGORITMO?',opts:null,conf:'Word Cloud · 60 seg · 3 entradas/persona',inst:'Proyecta la nube en vivo. Discute las palabras más frecuentes.'},
+  {n:2,tipo:'📊 Multiple Choice',c:'#0d9488',ses:'Sesión 1',q:'¿Cuál de estos ejemplos cotidianos ES un algoritmo?',opts:['A) Una foto del recreo','B) La lista de ingredientes','✅ C) Las instrucciones para preparar un plato','D) El número de página de un libro'],conf:'Multiple Choice · 60 seg · Mostrar resultados después de responder',inst:'Respuesta correcta: C. Activa el modo competitivo.'},
+  {n:3,tipo:'💬 Open Ended',c:'#7c3aed',ses:'Inicio Sesión 2',q:'¿Qué problema de tu vida diaria te gustaría resolver con un algoritmo?',opts:null,conf:'Open Ended · 90 seg · Visible para todos · Máx. 20 palabras',inst:'Lee en voz alta las respuestas más creativas. Activa la empatía.'},
+  {n:4,tipo:'📏 Scales 1-10',c:'#d97706',ses:'Cierre Sesión 3',q:'Califica del 1 al 10: ¿Qué tan claro tienes el concepto de VARIABLE?',opts:null,conf:'Scales · Rango 1-10 · Etiquetas: Muy confuso / Muy claro',inst:'El promedio en tiempo real indica si se necesita refuerzo antes de la sesión 4.'},
+  {n:5,tipo:'📊 Multiple Choice',c:'#0d9488',ses:'Sesión 4',q:'¿Cuál operador calcula el RESIDUO de una división en PSeInt?',opts:['A) %','B) mod','✅ C) MOD','D) //'],conf:'Multiple Choice · Modo competitivo · 20 seg',inst:'Úsala para reforzar MOD antes de los ejercicios de par/impar.'},
+  {n:6,tipo:'☁️ Word Cloud',c:'#5C5CE0',ses:'Inicio Sesión 5',q:'Escribe UN tipo de estructura de control que conozcas hasta ahora.',opts:null,conf:'Word Cloud · 45 seg · 1 entrada/persona',inst:'Activa saberes previos. Deberían aparecer: Secuencial, Si-SiNo, Para...'},
+  {n:7,tipo:'💬 Open Ended',c:'#7c3aed',ses:'Cierre Sesión 8',q:'¿Cuándo usarías Mientras en lugar de Para? Explica con un ejemplo de la vida real.',opts:null,conf:'Open Ended · 90 seg · Visible para todos',inst:'Lee 3-4 respuestas en voz alta. Genera debate sobre selección de bucles.'},
+  {n:8,tipo:'🏆 Ranking',c:'#dc2626',ses:'Sesión 9',q:'Ordena de la más SIMPLE a la más COMPLEJA:',opts:['• Secuencial','• Si-SiNo','• Para','• Mientras','• Segun'],conf:'Ranking · 45 seg · Mostrar ranking promedio del grupo',inst:'Muestra el ranking del grupo. Discute por qué difieren las opiniones.'},
+  {n:9,tipo:'📏 Scales 1-10',c:'#d97706',ses:'Previo Sesión 10',q:'¿Qué tan preparado(a) te sientes para el proyecto integrador?',opts:null,conf:'Scales · Rango 1-10 · Etiquetas: No estoy listo / Listo para el reto',inst:'Diagnóstico previo. Identifica estudiantes que necesitan apoyo.'},
+  {n:10,tipo:'💬 Open Ended',c:'#16a34a',ses:'Cierre Sesión 10',q:'En una sola frase: ¿Qué fue lo más importante que aprendiste en esta unidad?',opts:null,conf:'Open Ended · 60 seg · Visible para todos · Guardar respuestas',inst:'Cierre reflexivo. Guardar captura para el portafolio del docente.'},
+];
+function renderMenti(){
+  var h='';
+  MENTI.forEach(function(s){
+    h+='<div class="menti-card" style="border-left-color:'+s.c+'">';
+    h+='<div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;flex-wrap:wrap">';
+    h+='<span style="background:'+s.c+';color:#fff;padding:3px 10px;border-radius:11px;font-size:.72rem;font-weight:700">'+s.n+'. '+s.tipo+'</span>';
+    h+='<span style="background:#f1f5f9;color:var(--muted);padding:3px 10px;border-radius:11px;font-size:.7rem;font-weight:700">📅 '+s.ses+'</span></div>';
+    h+='<div style="font-weight:800;color:var(--navy);font-size:.93rem;margin-bottom:7px;line-height:1.5">"'+s.q+'"</div>';
+    if(s.opts){s.opts.forEach(function(o){h+='<div style="font-size:.82rem;color:var(--text);padding:3px 0">'+o+'</div>';});}
+    h+='<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">';
+    h+='<div style="flex:1;min-width:170px"><div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:'+s.c+';margin-bottom:2px">Instrucción docente</div><div style="font-size:.81rem;color:#4b5563">'+s.inst+'</div></div>';
+    h+='<div style="background:#f1f5f9;border-radius:6px;padding:7px 11px;font-size:.73rem;color:var(--text);font-family:monospace;min-width:150px">'+s.conf+'</div></div></div>';
+  });
+  var mc=document.getElementById('menti-container');
+  if(mc) mc.innerHTML=h;
+}
+
+var EDP=[
+  {n:1,tipo:'Crucigrama',icon:'✏️',c:'#E84545',bg:'#FFF0F0',ses:'Cierre Unidad',tit:'Crucigrama: Algoritmos Grado 9°',
+   pistas:[{d:'→ H1',p:'Repite código mientras condición sea verdadera',r:'MIENTRAS'},{d:'→ H2',p:'Herramienta de pseudocódigo en español',r:'PSEINT'},{d:'→ H3',p:'Proceso de encontrar y corregir errores',r:'DEPURACION'},{d:'→ H4',p:'Diagrama con símbolos que representa un algoritmo',r:'FLUJO'},{d:'→ H5',p:'Instrucción de entrada de datos en PSeInt',r:'LEER'},{d:'↓ V1',p:'Tipo de algoritmo sin decisiones ni repeticiones',r:'SECUENCIAL'},{d:'↓ V2',p:'Espacio en memoria para guardar un dato',r:'VARIABLE'},{d:'↓ V3',p:'Variable que se incrementa en 1 por iteración',r:'CONTADOR'},{d:'↓ V4',p:'División de un problema en subproblemas',r:'DESCOMPOSICION'}]},
+  {n:2,tipo:'Relacionar Columnas',icon:'🔗',c:'#3B82F6',bg:'#EFF6FF',ses:'Sesiones 1-3',tit:'Empareja: Términos y Definiciones',
+   pares:[{a:'Variable',b:'Espacio en memoria que almacena un valor cambiable'},{a:'Algoritmo',b:'Secuencia finita y ordenada de pasos para resolver un problema'},{a:'Condicional',b:'Estructura que ejecuta código solo si se cumple una condición'},{a:'Para',b:'Bucle con variable de control y repeticiones conocidas'},{a:'Mientras',b:'Bucle que verifica la condición al inicio'},{a:'Repetir-Hasta',b:'Bucle que ejecuta al menos una vez'},{a:'PseInt',b:'Herramienta para diseñar pseudocódigo en español'},{a:'Depuración',b:'Proceso de encontrar y corregir errores'}]},
+  {n:3,tipo:'Completar Texto',icon:'📝',c:'#7C3AED',bg:'#F5F3FF',ses:'Sesiones 4-7',tit:'Completa el código PSeInt',
+   frags:[{f:'_____ i <- 1 Hasta n Con Paso 1 _____\n   suma <- suma _____ i\nFinPara',r:['Para','Hacer','+']},{f:'Si edad >= _____ Entonces\n   Escribir "Mayor"\n_____ ... FinSi',r:['18','SiNo']},{f:'_____ nota <> -1 _____\n   suma <- suma + nota\n   _____ nota\nFinMientras',r:['Mientras','Hacer','Leer']},{f:'_____ contador, suma _____ Entero',r:['Definir','Como']}]},
+  {n:4,tipo:'Verdadero o Falso',icon:'⚖️',c:'#10B981',bg:'#ECFDF5',ses:'Sesiones 2-5',tit:'¿Verdadero o Falso? Algoritmos',
+   items:[{af:'Todo algoritmo debe ser finito.',v:true},{af:'En PSeInt el operador % calcula el residuo.',v:false,n:'Es MOD'},{af:'Repetir-Hasta siempre ejecuta al menos una vez.',v:true},{af:'Un bucle Mientras puede no ejecutarse nunca.',v:true},{af:'Para declarar una variable: variable <- Tipo',v:false,n:'Correcto: Definir variable Como Tipo'},{af:'El diamante en diagrama de flujo es una decisión.',v:true},{af:'PSeInt distingue mayúsculas en palabras clave.',v:false},{af:'Todo algoritmo debe tener al menos una entrada.',v:false,n:'Puede tener cero entradas'}]},
+  {n:5,tipo:'Sopa de Letras',icon:'🔎',c:'#F59E0B',bg:'#FFFBEB',ses:'Cierre Unidad',tit:'Sopa: Palabras Clave de Algoritmos',
+   palabras:['ALGORITMO','VARIABLE','PSEUDOCODIGO','MIENTRAS','DEPURACION','SECUENCIAL','CONTADOR','ACUMULADOR','CONDICIONAL','ITERACION','PSEINT','DIAGRAMA','FLUJO','ENTERO','CADENA'],
+   conf:'Cuadrícula: 15×15 · H + V + Diagonal · Nivel: Medio · Tiempo: 5 min'},
+  {n:6,tipo:'Quiz',icon:'🎯',c:'#8B5CF6',bg:'#F5F3FF',ses:'Sesiones 6-8',tit:'Quiz: Estructuras de Control',
+   qs:[{p:'¿Cuántas veces ejecuta Para i←1 Hasta 5?',c:'5',d:['3','4','6']},{p:'¿Qué estructura ejecuta al menos una vez?',c:'Repetir-Hasta',d:['Para','Mientras','Si']},{p:'¿Qué es un acumulador?',c:'Variable que suma valores en cada iteración',d:['Contador','Variable temporal','Índice']},{p:'¿Símbolo de decisión en diagrama?',c:'Diamante/Rombo',d:['Rectángulo','Óvalo','Paralelogramo']},{p:'¿Para qué sirve MOD?',c:'Calcular el residuo de una división',d:['Multiplicar','Dividir','Redondear']}]},
+];
+function renderEdp(){
+  var h='';
+  EDP.forEach(function(act){
+    var body='';
+    if(act.tipo==='Crucigrama'){
+      body='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:7px">';
+      act.pistas.forEach(function(r){body+='<div style="background:#fff;border-radius:7px;padding:9px 11px;border:1px solid #fecdd3;display:flex;gap:9px;align-items:flex-start"><span style="font-weight:800;color:'+act.c+';font-size:.78rem;min-width:30px">'+r.d+'</span><div><div style="font-size:.81rem;color:var(--text)">'+r.p+'</div><div style="font-family:monospace;font-weight:700;color:'+act.c+';font-size:.86rem;margin-top:2px">'+r.r+'</div></div></div>';});
+      body+='</div>';
+    } else if(act.tipo==='Relacionar Columnas'){
+      body='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">';
+      act.pares.forEach(function(r){body+='<div style="background:#fff;border-radius:6px;padding:7px 10px;border:1px solid #bfdbfe;font-size:.8rem;font-weight:700;color:'+act.c+'">'+r.a+'</div><div style="background:#fff;border-radius:6px;padding:7px 10px;border:1px solid var(--border);font-size:.8rem;color:var(--text)">'+r.b+'</div>';});
+      body+='</div>';
+    } else if(act.tipo==='Completar Texto'){
+      act.frags.forEach(function(f,i){body+='<div style="background:#fff;border-radius:7px;padding:10px;margin-bottom:7px;border:1px solid #ddd8fe"><div style="font-size:.7rem;font-weight:700;color:'+act.c+';margin-bottom:5px">Fragmento '+(i+1)+'</div><pre style="font-family:monospace;font-size:.8rem;color:var(--navy);margin-bottom:5px;background:#f8f9fa;padding:7px;border-radius:5px;overflow-x:auto">'+f.f+'</pre><div style="font-size:.76rem;color:var(--green);font-weight:700">✅ Respuestas: '+f.r.join(' → ')+'</div></div>';});
+    } else if(act.tipo==='Verdadero o Falso'){
+      body='<div style="display:flex;flex-direction:column;gap:5px">';
+      act.items.forEach(function(f){body+='<div style="background:#fff;border-radius:7px;padding:8px 11px;border:1px solid #d1fae5;display:flex;align-items:flex-start;gap:9px"><span style="width:24px;height:24px;border-radius:50%;background:'+(f.v?'var(--green)':'var(--red)')+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;flex-shrink:0">'+(f.v?'V':'F')+'</span><div><div style="font-size:.83rem;color:var(--text)">'+f.af+'</div>'+(f.n?'<div style="font-size:.72rem;color:var(--red);margin-top:1px">⚠️ '+f.n+'</div>':'')+'</div></div>';});
+      body+='</div>';
+    } else if(act.tipo==='Sopa de Letras'){
+      body='<div style="margin-bottom:9px"><div style="font-size:.75rem;font-weight:700;color:'+act.c+';margin-bottom:5px">PALABRAS ('+act.palabras.length+'):</div><div style="display:flex;flex-wrap:wrap;gap:5px">';
+      act.palabras.forEach(function(p){body+='<span style="background:'+act.bg+';border:1px solid '+act.c+';color:'+act.c+';padding:2px 9px;border-radius:11px;font-size:.78rem;font-weight:700">'+p+'</span>';});
+      body+='</div></div><div style="background:#fff;border-radius:7px;padding:9px 11px;border:1px solid #fde68a;font-size:.8rem;color:var(--text)">⚙️ '+act.conf+'</div>';
+    } else if(act.tipo==='Quiz'){
+      act.qs.forEach(function(q,i){body+='<div style="background:#fff;border-radius:7px;padding:9px 11px;margin-bottom:7px;border:1px solid #e9d5ff"><div style="font-size:.78rem;font-weight:700;color:'+act.c+';margin-bottom:4px">P'+(i+1)+': '+q.p+'</div><div style="display:flex;gap:5px;flex-wrap:wrap"><span style="background:var(--greenL);border:1px solid var(--green);color:var(--green);padding:1px 9px;border-radius:9px;font-size:.76rem;font-weight:700">✅ '+q.c+'</span>';q.d.forEach(function(dd){body+='<span style="background:#f1f5f9;color:var(--muted);padding:1px 9px;border-radius:9px;font-size:.76rem">'+dd+'</span>';});body+='</div></div>';});
+    }
+    h+='<div class="edp-card" style="background:'+act.bg+';border:1px solid '+act.c+'44">';
+    h+='<div class="edp-head" style="background:'+act.c+'">';
+    h+='<span style="font-size:1.6rem">'+act.icon+'</span>';
+    h+='<div style="flex:1"><div style="color:#fff;font-weight:800;font-size:.92rem">Actividad '+act.n+': '+act.tit+'</div><div style="color:rgba(255,255,255,.75);font-size:.75rem">Tipo: '+act.tipo+' · '+act.ses+'</div></div>';
+    h+='<a href="https://www.educaplay.com" target="_blank" style="background:rgba(255,255,255,.2);color:#fff;padding:5px 13px;border-radius:6px;font-size:.75rem;font-weight:700;text-decoration:none">Crear ↗</a></div>';
+    h+='<div class="edp-body">'+body+'</div></div>';
+  });
+  var ec=document.getElementById('edp-container');
+  if(ec) ec.innerHTML=h;
+}
+
+function showPlat(id, btn) {
+  document.querySelectorAll('.plat-panel').forEach(function(p){p.classList.remove('active');});
+  var palettes={kahoot:'#46178f',menti:'#5C5CE0',educaplay:'#E84545'};
+  document.querySelectorAll('.plt-tab').forEach(function(b){
+    b.style.background='#fff';
+    var oc=b.getAttribute('onclick')||'';
+    if(oc.indexOf('kahoot')>=0){b.style.color=palettes.kahoot;b.style.borderColor=palettes.kahoot;}
+    else if(oc.indexOf('menti')>=0){b.style.color=palettes.menti;b.style.borderColor=palettes.menti;}
+    else{b.style.color=palettes.educaplay;b.style.borderColor=palettes.educaplay;}
+  });
+  document.getElementById('plat-'+id).classList.add('active');
+  btn.style.background=palettes[id];
+  btn.style.color='#fff';
+}
+
+// ─── INIT ────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  renderSessions();
+  renderExercises();
+  renderIDevices();
+  setTimeout(function(){
+    initMatching();
+    initCloze();
+    initCrossword();
+    renderKahootCards();
+    renderKahootQ(0);
+    renderMenti();
+    renderEdp();
+  }, 150);
+});
+</script>
+</body>
+</html>
